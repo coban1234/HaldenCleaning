@@ -23,7 +23,7 @@ function asNumber(value: unknown) {
 
 export const POST: APIRoute = async ({ request }) => {
   const key = import.meta.env.RESEND_API_KEY as string | undefined;
-  const from = (import.meta.env.BOOKING_FROM as string | undefined) || `Threshold Cleaning <${brand.email}>`;
+  const from = (import.meta.env.BOOKING_FROM as string | undefined) || `HalderCleaning <${brand.email}>`;
   const ops = (import.meta.env.BOOKING_OPS_EMAIL as string | undefined) || brand.email;
 
   if (!key) {
@@ -67,7 +67,6 @@ export const POST: APIRoute = async ({ request }) => {
     freq,
     addons,
     date: asString(body.date),
-    teamId: asString(body.teamId),
     price: body.price == null ? null : asNumber(body.price),
     duration: asString(body.duration) || "Quoted after a walkthrough",
   };

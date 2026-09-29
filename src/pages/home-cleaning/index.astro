@@ -3,13 +3,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import QuoteWidget from "../../components/QuoteWidget.astro";
 import RoomExplorer from "../../components/RoomExplorer.astro";
-import TeamGrid from "../../components/TeamGrid.astro";
 import QuoteTable from "../../components/QuoteTable.astro";
 import FaqList from "../../components/FaqList.astro";
 import { brand, images } from "../../data/brand";
 import { residentialServices } from "../../data/services";
 import { comparison, quotePrice } from "../../data/pricing";
-import { team } from "../../data/team";
 import { faqs } from "../../data/reviews";
 import { serviceLd } from "../../data/schema";
 
@@ -125,11 +123,6 @@ const twoTwo = quotePrice(2, 2, "standard", "biweekly");
         }
       </tbody>
     </table>
-  </section>
-
-  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
-    <h2 class="display font-semibold fs-h2 mb-6">The same team</h2>
-    <TeamGrid people={team.slice(0, 4)} />
   </section>
 
   <section class="mx-auto max-w-page px-5 md:px-8 pb-16">

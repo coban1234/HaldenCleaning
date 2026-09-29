@@ -3,11 +3,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import QuoteWidget from "../components/QuoteWidget.astro";
 import QuoteTable from "../components/QuoteTable.astro";
 import RoomExplorer from "../components/RoomExplorer.astro";
-import TeamGrid from "../components/TeamGrid.astro";
 import { brand, images } from "../data/brand";
 import { localBusinessLd } from "../data/schema";
 import { areas } from "../data/areas";
-import { team } from "../data/team";
 import { quotePrice } from "../data/pricing";
 import { reviews } from "../data/reviews";
 import { guides } from "../data/guides";
@@ -162,20 +160,10 @@ const prices = [
       </li>
       <li class="p-6 md:p-8">
         <p class="display tabular font-semibold text-euc leading-none text-[2.75rem] md:text-[3.25rem]">03</p>
-        <h3 class="mt-6 font-semibold fs-h3">The same team.</h3>
+        <h3 class="mt-6 font-semibold fs-h3">The same people.</h3>
         <p class="mt-2 text-slate">Not a different stranger every visit.</p>
       </li>
     </ol>
-  </section>
-
-  <section class="border-y border-line bg-paper">
-    <div class="mx-auto max-w-page px-5 md:px-8 pt-10 pb-[72px] md:pt-12 md:pb-32">
-      <h2 class="display font-semibold fs-h2 mb-8">Meet the team</h2>
-      <TeamGrid people={team.slice(0, 4)} />
-      <p class="mt-6 text-[15px]">
-        <a href="/our-team/" class="text-euc font-medium underline underline-offset-4">Our team →</a>
-      </p>
-    </div>
   </section>
 
   <section class="mx-auto max-w-page px-5 md:px-8 section-y">

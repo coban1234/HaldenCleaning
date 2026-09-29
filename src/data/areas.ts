@@ -42,7 +42,7 @@ export const areas: Area[] = [
       "Townhouse complexes usually have visitor parking that is signed and enforced. We need the stall number and any gate code in the booking. High-rises around Metrotown follow the same elevator-booking pattern as Vancouver downtown.",
     mix: "More townhomes than Vancouver, more family-sized kitchens, more pets. Recurring bi-weekly is the dominant cadence — Burnaby households book a rhythm, not a one-off.",
     body: [
-      "Burnaby is where the same-team claim is tested. School-run households notice when a different person arrives. We schedule named crews against postal-code clusters (V5A–V5J) so Maya’s Burnaby days stay Burnaby days.",
+      "Burnaby is where the same-people claim is tested. School-run households notice when a different person arrives. We schedule crews against postal-code clusters (V5A–V5J) so recurring Burnaby days stay Burnaby days.",
       "Metrotown strata buildings increasingly ask for green-cleaning documentation even on residential suites when the building is pursuing BOMA or LEED credits in common areas. SDS sheets for the products used in-suite are available on request.",
       "The heights bungalows (Capitol Hill, Burnaby North) have original tile baths and older grout. Deep-clean versus standard is a real difference here: standard spots the grout, deep descale the shower glass and treats grout. That distinction is in the comparison table, not in adjectives.",
       "A typical Burnaby 3-bed, 2-bath townhouse on a bi-weekly standard visit is modelled against the 3-bed published rate, not a Vancouver condo rate. If your home is larger than the table, we walk it. We do not invent a number.",
@@ -61,7 +61,7 @@ export const areas: Area[] = [
       "Most houses have driveways. Condos along the Canada Line need elevator bookings at peak. We collect building access in the booking form, not after arrival.",
     mix: "A high share of multi-generational houses. Move-out cleaning is common around lease turnover near the bridgeheads and City Centre.",
     body: [
-      "Richmond bookings fail when a cleaner cannot communicate at the door. Our Richmond rotation includes Daniel (EN, ZH) and crews used to working in households where the decision-maker is not the person who lets us in. Languages spoken sit on the team cards for that reason.",
+      "Richmond bookings fail when a cleaner cannot communicate at the door. We staff Richmond with crews used to households where the decision-maker is not the person who lets us in, including English and Mandarin at the door.",
       "Steveston and Terra Nova houses often include a wok station or extra gas burner that a generic “kitchen” bullet does not cover. The kitchen list includes cooktop and knobs, exterior of all appliances, and the backsplash — grease is the actual work, not the sink.",
       "City Centre condos are closer to Vancouver downtown in size and in strata rules. Insurance and WCB documents are on file for buildings that ask.",
       "Published Richmond rates are the same flat table as the rest of the region. We do not add a Richmond surcharge. Travel is built into the model.",
@@ -83,7 +83,7 @@ export const areas: Area[] = [
       "A North Shore standard visit that ignores the staircase dust and the entry grit from hiking shoes will look unfinished. Hall checks include banister, floors, and the shoe area. If that is not in someone else’s quote, their hourly number is not comparable.",
       "Lower Lonsdale strata buildings behave like downtown Vancouver: elevator bookings, COI on file, fobs. Upper Cap and Braemar houses behave like Burnaby heights: driveway, longer visit, more add-ons.",
       "Weather is a scope factor. Mud season is real. We do not charge extra for a wet entry on a recurring visit; that is the job. Post-renovation drywall dust is a different service.",
-      "Tomas and Daniel cover North Vancouver on a clustered schedule so the same people return. Filter the team page by North Vancouver to see who that is.",
+      "North Vancouver is covered on a clustered schedule so recurring visits are not a special trip. The same people return as the route allows — illness and holidays still exist.",
     ],
   },
   {
@@ -101,7 +101,7 @@ export const areas: Area[] = [
     body: [
       "A four-bed Surrey house quoted as “four hours, two cleaners” without a room list is how invoices grow. Our 4-bed, 3-bath published rate exists so that conversation happens before the visit, not after.",
       "South Surrey kitchens and bonus rooms push a standard visit toward the top of the table. If the home is 5-bed or has a legal suite you want cleaned, that is a walkthrough, not a guess. The site will not invent a fifth-bedroom price.",
-      "Priya’s crew covers Surrey and the eastern Burnaby edge. Languages on the card are EN and Punjabi. That is operational, not decorative.",
+      "Surrey and the eastern Burnaby edge are covered on a clustered route. Languages at the door include English and Punjabi. That is operational, not decorative.",
       "Parkade and townhouse-complex rules in City Centre buildings are closer to commercial work than to a Kits walk-up. If your strata desk needs COI, we send it before the first visit.",
     ],
   },
@@ -121,7 +121,7 @@ export const areas: Area[] = [
       "Burke Mountain and Westwood Plateau homes are where “2 bed, 2 bath” on a form can still mean 2,400 sq ft. We ask square footage in booking step 1 for that reason. If the number and the bedroom count disagree, we call before we confirm a flat rate.",
       "Maillardville’s older homes have similar kitchen-grease and bathroom-limescale profiles to Vancouver character stock. Deep-clean is the honest first visit if the home has not been professionally cleaned in a year.",
       "Coquitlam strata towers along the Evergreen Line are new enough that move-in cleaning is a regular job: construction dust, sticker residue, tracks. That is the move-in / move-out service, not a standard recurring visit with extra adjectives.",
-      "Lena and Tomas cover Coquitlam with Burnaby days adjacent, so a Coquitlam recurring visit is not a special trip with a special fee.",
+      "Coquitlam is covered with Burnaby days adjacent, so a Coquitlam recurring visit is not a special trip with a special fee.",
     ],
   },
 ];

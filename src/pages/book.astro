@@ -38,7 +38,7 @@ const initialAddOns = (params.get("addons") || "").split(",").filter(Boolean);
       />
     </div>
     <noscript>
-      <form class="mt-10 bg-paper border border-line rounded-card p-6 space-y-4" method="post" action={`mailto:hello@thresholdcleaning.ca`}>
+      <form class="mt-10 bg-paper border border-line rounded-card p-6 space-y-4" method="post" action={`mailto:${brand.email}`}>
         <h2 class="font-semibold fs-h3">Request a booking</h2>
         <label class="block">Name<input class="mt-1 w-full min-h-12 border border-line rounded-card px-3" name="name" required /></label>
         <label class="block">Address<input class="mt-1 w-full min-h-12 border border-line rounded-card px-3" name="address" required /></label>

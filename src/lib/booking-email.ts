@@ -7,7 +7,6 @@ import {
   type ServiceLevel,
 } from "../data/pricing";
 import { rooms } from "../data/rooms";
-import { team } from "../data/team";
 
 export type BookingPayload = {
   name: string;
@@ -25,7 +24,6 @@ export type BookingPayload = {
   freq: Frequency;
   addons: string[];
   date: string;
-  teamId: string;
   price: number | null;
   duration: string;
 };
@@ -34,10 +32,6 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function isEmail(value: string) {
   return emailPattern.test(value.trim());
-}
-
-export function personName(teamId: string) {
-  return team.find((person) => person.id === teamId)?.name ?? "Assigned at confirmation";
 }
 
 export function addonLabels(ids: string[]) {
@@ -61,7 +55,6 @@ function escapeHtml(value: string) {
 
 export function bookingEmail(payload: BookingPayload) {
   const walkthrough = payload.price == null;
-  const person = personName(payload.teamId);
   const extras = addonLabels(payload.addons);
   const scope = scopeRows(payload.service);
   const priceLine = walkthrough ? "Quoted after a walkthrough" : `$${payload.price} flat`;
@@ -116,7 +109,6 @@ export function bookingEmail(payload: BookingPayload) {
               <p style="margin:0 0 8px;font-family:sans-serif;font-size:15px;color:#1E2420;">${escapeHtml(serviceLine)}</p>
               <p style="margin:0 0 8px;font-family:sans-serif;font-size:15px;color:#5C665E;">${escapeHtml(payload.duration)}</p>
               <p style="margin:0 0 8px;font-family:sans-serif;font-size:15px;color:#5C665E;">Date: ${escapeHtml(dateLine)}</p>
-              <p style="margin:0 0 8px;font-family:sans-serif;font-size:15px;color:#5C665E;">Team: ${escapeHtml(person)}</p>
               <p style="margin:0;font-family:sans-serif;font-size:15px;color:#5C665E;">Address: ${escapeHtml(payload.address || "On file")}</p>
               ${
                 extras.length
@@ -151,7 +143,6 @@ export function bookingEmail(payload: BookingPayload) {
     serviceLine,
     payload.duration,
     `Date: ${dateLine}`,
-    `Team: ${person}`,
     `Address: ${payload.address}`,
     extras.length ? `Add-ons: ${extras.join(", ")}` : "",
     "",

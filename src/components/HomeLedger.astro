@@ -1,6 +1,5 @@
 ---
 import { rooms } from "../data/rooms";
-import { team } from "../data/team";
 import { quotePrice } from "../data/pricing";
 
 const kitchen = rooms[0];
@@ -35,7 +34,7 @@ const prices = [
 
 <section class="border-y border-line bg-paper">
   <div class="mx-auto max-w-page px-5 md:px-8 py-8 md:py-10">
-    <div class="grid lg:grid-cols-3 gap-10 lg:gap-6">
+    <div class="grid lg:grid-cols-2 gap-10 lg:gap-12">
       <div class="min-w-0">
         <div class="flex items-baseline justify-between gap-3 mb-3">
           <h2 class="font-semibold fs-h3">{kitchen.name}</h2>
@@ -78,36 +77,6 @@ const prices = [
           <a href="/home-cleaning/whats-included/" class="text-euc font-medium underline underline-offset-4"
             >Every room, every check →</a
           >
-        </p>
-      </div>
-
-      <div class="min-w-0">
-        <h2 class="display font-semibold mb-4 fs-h3">Meet the team</h2>
-        <div class="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-2">
-          {
-            team.slice(0, 4).map((person) => (
-              <article class="text-center">
-                <img
-                  src={person.photo}
-                  alt={`Portrait of ${person.name}.`}
-                  class="w-full aspect-square object-cover rounded-card border border-line"
-                  width="200"
-                  height="200"
-                />
-                <p class="mt-2 text-[14px] font-semibold lg:mt-1.5 lg:text-[13px]">{person.name}</p>
-                <p class="tabular text-[12px] text-slate leading-tight lg:text-[11px]">
-                  {person.years} yr
-                  <span class="block lg:inline">
-                    <span class="hidden lg:inline"> · </span>
-                    {person.languages.join(" · ")}
-                  </span>
-                </p>
-              </article>
-            ))
-          }
-        </div>
-        <p class="mt-4 text-[13px]">
-          <a href="/our-team/" class="text-euc font-medium underline underline-offset-4">Our team →</a>
         </p>
       </div>
 

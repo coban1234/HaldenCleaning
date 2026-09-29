@@ -41,7 +41,7 @@ export const guides: Guide[] = [
     featured: true,
     body: [
       "Every comparison article in this market ends with the same instruction: ask what is included before you compare quotes. A cheaper clean that excludes the oven and the fridge can cost more once add-ons are counted. The problem is that almost nobody publishes the list.",
-      "A standard visit at Threshold is 53 checkpoints across six rooms. The kitchen list is public: countertops, sink and taps, cooktop and knobs, appliance exteriors, cabinet fronts, backsplash, floors, bins, table, switches, microwave exterior. Inside oven, inside fridge and inside cabinets are add-ons on a standard visit, priced on the same page.",
+      "A standard visit at HalderCleaning is 53 checkpoints across six rooms. The kitchen list is public: countertops, sink and taps, cooktop and knobs, appliance exteriors, cabinet fronts, backsplash, floors, bins, table, switches, microwave exterior. Inside oven, inside fridge and inside cabinets are add-ons on a standard visit, priced on the same page.",
       "Deep clean moves oven and fridge into the included column and adds grout, tracks and baseboards. Move-out adds inside cabinets and a vacant-home assumption. That is a table, not a vibe.",
       "If a Vancouver company will not show you the bathroom list, assume window tracks and grout are extra. If they will not name the add-on prices, assume they will appear on the invoice. The room explorer on this site is the document we work from, and it is attached to the confirmation email.",
       "Rooms on a standard visit: kitchen, bathroom, bedroom, living, hall, laundry. Approximate kitchen time is 35 minutes. The whole-home time for a two-bed, two-bath is modelled at about 3 hours 15 minutes with two people.",
@@ -85,13 +85,12 @@ export const guides: Guide[] = [
     title: "Do you get the same cleaners every visit?",
     h1: "Do you get the same cleaners every visit?",
     description:
-      "Named teams by postal-code cluster — not a rotating roster of strangers. How coverage works in Vancouver and the Fraser Valley.",
+      "Named crews by postal-code cluster — not a rotating roster of strangers. How coverage works in Vancouver and the Fraser Valley.",
     target: "same cleaners every time",
     group: "home",
     body: [
-      "A rotating roster is the largest residential complaint in this category. People notice when a different stranger has a key, and they notice when the kitchen is done a different way. We schedule named teams against postal-code clusters so Maya’s Burnaby days stay Burnaby days.",
-      "You can see who covers your municipality on the team page. Languages spoken sit on the cards because Richmond and Surrey bookings fail when nobody at the door can talk to the person who lets us in. You can request a preferred team at booking.",
-      "Same team does not mean the same two people on every single visit forever. Illness, holidays and a clustered route still exist. It means you are not drawing from a gig pool, and the people who know your shoe-off rule are the people who come back.",
+      "A rotating roster is the largest residential complaint in this category. People notice when a different stranger has a key, and they notice when the kitchen is done a different way. We schedule crews against postal-code clusters so the people who know a neighbourhood keep covering it.",
+      "You do not pick a named cleaner at booking. Assignment is handled by us. Same crew does not mean the same two people on every single visit forever — illness, holidays and a clustered route still exist. It means you are not drawing from a gig pool, and the people who know your shoe-off rule are the people who come back.",
       "You do not need to be home. Access instructions, fobs, elevator bookings and pet details are first-class fields in the form — not a notes box. If a building needs a certificate of insurance on file, we send it before the first visit.",
     ],
   },

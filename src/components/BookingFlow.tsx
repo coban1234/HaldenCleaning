@@ -9,7 +9,6 @@ import {
   type Frequency,
   type ServiceLevel,
 } from "../data/pricing";
-import { team } from "../data/team";
 
 const steps = ["Your home", "Service", "When", "Details"] as const;
 const field =
@@ -49,7 +48,6 @@ export default function BookingFlow({
   const [freq, setFreq] = useState<Frequency>(initialFreq);
   const [addons, setAddons] = useState<string[]>(initialAddOns);
   const [date, setDate] = useState("");
-  const [teamId, setTeamId] = useState(team[0].id);
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
@@ -124,7 +122,6 @@ export default function BookingFlow({
               freq,
               addons,
               date,
-              teamId,
               price: quote.price,
               duration: quote.duration,
             }),
@@ -305,26 +302,6 @@ export default function BookingFlow({
               onChange={(e) => setDate(e.target.value)}
             />
           </label>
-          <fieldset>
-            <legend className="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">
-              Preferred team
-            </legend>
-            <div className="mt-2">
-              {team.map((person) => (
-                <label key={person.id} className="flex items-center gap-3 min-h-12 border-b border-line">
-                  <input
-                    type="radio"
-                    name="team"
-                    checked={teamId === person.id}
-                    onChange={() => setTeamId(person.id)}
-                  />
-                  <span>
-                    {person.name} · {person.years} years · {person.languages.join(", ")}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
         </div>
 
         <div className={`booking-step space-y-4 xl:mt-10 ${step === 3 ? "is-active" : ""}`}>

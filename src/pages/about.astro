@@ -1,9 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Breadcrumbs from "../components/Breadcrumbs.astro";
-import TeamGrid from "../components/TeamGrid.astro";
 import { brand, images } from "../data/brand";
-import { team } from "../data/team";
 import { quotePrice } from "../data/pricing";
 
 const twoTwo = quotePrice(2, 2, "standard", "biweekly");
@@ -21,8 +19,8 @@ const principles = [
   },
   {
     n: "03",
-    title: "The same team.",
-    body: "Named people, scheduled by postal-code cluster — not a rotating roster of strangers. That is the largest residential complaint in this category.",
+    title: "The same people.",
+    body: "Scheduled by area — not a rotating roster of strangers. That is the largest residential complaint in this category.",
   },
   {
     n: "04",
@@ -33,14 +31,14 @@ const principles = [
 
 const facts = [
   { label: "Where", value: "Six municipalities across Vancouver and the Fraser Valley." },
-  { label: "Who", value: "Named crews. Criminal record check, bonded, WCB covered." },
+  { label: "Who", value: "Crews covering Vancouver and the Fraser Valley. Criminal record check, bonded, WCB covered." },
   { label: "The number", value: `2 bed, 2 bath · bi-weekly from $${twoTwo.price}. Same table in every area.` },
 ];
 ---
 
 <BaseLayout
   title={`About ${brand.name} | Vancouver Cleaning`}
-  description="You see the whole scope before you book, and the price does not move. The same team, every visit, across Vancouver and the Fraser Valley."
+  description="You see the whole scope before you book, and the price does not move. The same people, every visit, across Vancouver and the Fraser Valley."
   canonical="/about/"
 >
   <article class="mx-auto max-w-page px-5 md:px-8 py-8">
@@ -54,7 +52,7 @@ const facts = [
       </div>
       <div class="md:pt-8">
         <p class="text-ink fs-lead">
-          You see the whole scope before you book, and the price does not move. The same team, every
+          You see the whole scope before you book, and the price does not move. The same people, every
           visit, across {brand.region}.
         </p>
         <p class="mt-4 tabular text-slate text-[15px]">
@@ -69,10 +67,10 @@ const facts = [
             Get my price
           </a>
           <a
-            href="/our-team/"
+            href="/home-cleaning/whats-included/"
             class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-8 rounded-full border-[1.5px] border-ink font-semibold"
           >
-            Meet the team
+            See what's included
           </a>
         </div>
       </div>
@@ -90,7 +88,7 @@ const facts = [
     <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
       <h2 class="display font-semibold fs-h2">What we will not hide</h2>
       <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
-        Four claims. Each one is a page on this site, not a slogan.
+        Four claims. Each one is how the work is run, not a slogan.
       </p>
     </div>
     <ol class="bg-paper border border-line rounded-card overflow-hidden grid md:grid-cols-2">
@@ -134,18 +132,5 @@ const facts = [
         }
       </div>
     </div>
-  </section>
-
-  <section class="mx-auto max-w-page px-5 md:px-8 py-12 md:py-16">
-    <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
-      <h2 class="display font-semibold fs-h2">Who covers the work</h2>
-      <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
-        First names, years with us, languages spoken. The rest is on the team page.
-      </p>
-    </div>
-    <TeamGrid people={team.slice(0, 4)} />
-    <p class="mt-6 text-[15px]">
-      <a href="/our-team/" class="text-euc font-medium underline underline-offset-4">Our team →</a>
-    </p>
   </section>
 </BaseLayout>

@@ -41,7 +41,7 @@ export const faqs = {
     },
     {
       q: "Do I get the same cleaners?",
-      a: "Yes — named teams scheduled by area. You can see who covers your municipality on the team page, and you can request a preferred team at booking.",
+      a: "We schedule by area so you are not drawing from a rotating roster. Crew assignment is handled by us — you do not pick a named cleaner at booking.",
     },
     {
       q: "Do I need to be home?",

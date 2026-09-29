@@ -1,9 +1,9 @@
 export const brand = {
-  name: "Threshold",
-  legalName: "Threshold Cleaning",
+  name: "HalderCleaning",
+  legalName: "HalderCleaning",
   region: "Vancouver & the Fraser Valley",
-  domain: "https://thresholdcleaning.ca",
-  email: "hello@thresholdcleaning.ca",
+  domain: "https://haldercleaning.ca",
+  email: "hello@haldercleaning.ca",
   phone: "604-555-0148",
   phoneHref: "tel:+16045550148",
   address: "Vancouver, BC",
@@ -24,7 +24,6 @@ export const nav = [
   { href: "/commercial/", label: "Commercial" },
   { href: "/strata/", label: "Strata" },
   { href: "/pricing/", label: "Pricing" },
-  { href: "/our-team/", label: "Our team" },
 ] as const;
 
 export const images = {

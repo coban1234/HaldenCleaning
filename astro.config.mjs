@@ -9,9 +9,13 @@ const githubPages = process.env.GITHUB_PAGES === "true";
 export default defineConfig({
   site: githubPages
     ? "https://coban1234.github.io"
-    : "https://thresholdcleaning.ca",
+    : "https://haldercleaning.ca",
   base: githubPages ? "/HaldenCleaning/" : "/",
   trailingSlash: "always",
+  redirects: {
+    "/our-team": "/",
+    "/our-team/": "/",
+  },
   integrations: [tailwind(), react(), sitemap()],
   output: "static",
   adapter: node({ mode: "standalone" }),

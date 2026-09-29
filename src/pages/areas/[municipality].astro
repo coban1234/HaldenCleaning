@@ -1,11 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
-import TeamGrid from "../../components/TeamGrid.astro";
 import QuoteTable from "../../components/QuoteTable.astro";
 import { areaBySlug, areas } from "../../data/areas";
 import { brand } from "../../data/brand";
-import { team } from "../../data/team";
 import { serviceLd } from "../../data/schema";
 import { quotePrice } from "../../data/pricing";
 
@@ -15,7 +13,6 @@ export function getStaticPaths() {
 
 const area = areaBySlug(Astro.params.municipality!);
 if (!area) throw new Error("Missing area");
-const localTeam = team.filter((person) => person.areas.includes(area.slug));
 const others = areas.filter((item) => item.slug !== area.slug);
 const twoTwo = quotePrice(2, 2, "standard", "biweekly");
 const wordCount = [area.intro, area.stock, area.access, area.mix, ...area.body]
@@ -121,16 +118,6 @@ const facts = [
         }
       </ol>
     </div>
-  </section>
-
-  <section class="mx-auto max-w-page px-5 md:px-8 py-12 md:py-16">
-    <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
-      <h2 class="display font-semibold fs-h2">Who covers {area.name}</h2>
-      <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
-        Named people, not a rotating roster.
-      </p>
-    </div>
-    <TeamGrid people={localTeam.length ? localTeam : team.slice(0, 3)} />
   </section>
 
   <section class="mx-auto max-w-page px-5 md:px-8 pb-12 md:pb-16">

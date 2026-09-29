@@ -1,4 +1,6 @@
 ---
+import { brand } from "../data/brand";
+
 type Crumb = { href?: string; label: string };
 type Props = { items: Crumb[] };
 const { items } = Astro.props;
@@ -9,7 +11,7 @@ const jsonLd = {
     "@type": "ListItem",
     position: i + 1,
     name: item.label,
-    item: item.href ? `https://thresholdcleaning.ca${item.href}` : undefined,
+    item: item.href ? `${brand.domain}${item.href}` : undefined,
   })),
 };
 ---

@@ -57,7 +57,7 @@ const defaultQuote = quotePrice(2, 2, "standard", "biweekly");
 
   function storedQuote() {
     try {
-      return JSON.parse(sessionStorage.getItem("threshold-quote") || "null");
+      return JSON.parse(sessionStorage.getItem("halder-quote") || "null");
     } catch {
       return null;
     }
@@ -91,6 +91,6 @@ const defaultQuote = quotePrice(2, 2, "standard", "biweekly");
   window.addEventListener("quote:update", ((event: CustomEvent) => {
     const detail = event.detail as { price?: string | null; href?: string };
     applyQuote(detail);
-    sessionStorage.setItem("threshold-quote", JSON.stringify(detail));
+    sessionStorage.setItem("halder-quote", JSON.stringify(detail));
   }) as EventListener);
 </script>
