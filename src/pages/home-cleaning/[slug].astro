@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import { findService, residentialServices } from "../../data/services";
 import { serviceLd } from "../../data/schema";
+import { href } from "../../lib/href";
 
 export function getStaticPaths() {
   return residentialServices.map((s) => ({ params: { slug: s.slug } }));
@@ -31,7 +32,7 @@ if (!service) throw new Error("Missing service");
     <h1 class="display mt-3 font-semibold fs-hero max-w-[20ch]">{service.h1}</h1>
     <p class="mt-3 max-w-[48ch] text-slate fs-lead">{service.lead}</p>
     <a
-      href="/book/"
+      href={href("/book/")}
       class="mt-8 inline-flex items-center justify-center min-h-[56px] px-10 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h"
       >Book online</a
     >
@@ -52,7 +53,7 @@ if (!service) throw new Error("Missing service");
       }
     </div>
     <p class="mt-12">
-      <a href="/home-cleaning/whats-included/" class="text-euc underline underline-offset-4"
+      <a href={href("/home-cleaning/whats-included/")} class="text-euc underline underline-offset-4"
         >See the room-by-room list →</a
       >
     </p>

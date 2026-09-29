@@ -1,5 +1,6 @@
 ---
 import { brand } from "../data/brand";
+import { href } from "../lib/href";
 import { residentialServices, commercialServices, strataServices } from "../data/services";
 import { areas } from "../data/areas";
 ---
@@ -22,11 +23,11 @@ import { areas } from "../data/areas";
         {
           residentialServices.map((s) => (
             <li>
-              <a href={`/home-cleaning/${s.slug}/`}>{s.eyebrow.split("·")[1]?.trim() ?? s.slug}</a>
+              <a href={href(`/home-cleaning/${s.slug}/`)}>{s.eyebrow.split("·")[1]?.trim() ?? s.slug}</a>
             </li>
           ))
         }
-        <li><a href="/home-cleaning/whats-included/">What's included</a></li>
+        <li><a href={href("/home-cleaning/whats-included/")}>What's included</a></li>
       </ul>
     </div>
     <div>
@@ -35,7 +36,7 @@ import { areas } from "../data/areas";
         {
           commercialServices.map((s) => (
             <li>
-              <a href={`/commercial/${s.slug}/`}>{s.eyebrow.split("·")[1]?.trim() ?? s.slug}</a>
+              <a href={href(`/commercial/${s.slug}/`)}>{s.eyebrow.split("·")[1]?.trim() ?? s.slug}</a>
             </li>
           ))
         }
@@ -47,7 +48,7 @@ import { areas } from "../data/areas";
         {
           strataServices.map((s) => (
             <li>
-              <a href={`/strata/${s.slug}/`}>{s.eyebrow.split("·")[1]?.trim() ?? s.slug}</a>
+              <a href={href(`/strata/${s.slug}/`)}>{s.eyebrow.split("·")[1]?.trim() ?? s.slug}</a>
             </li>
           ))
         }
@@ -56,17 +57,17 @@ import { areas } from "../data/areas";
     <div>
       <p class="font-semibold">Company</p>
       <ul class="mt-2 space-y-1.5 text-euc-lt">
-        <li><a href="/areas/">Areas</a></li>
+        <li><a href={href("/areas/")}>Areas</a></li>
         {
           areas.slice(0, 3).map((a) => (
             <li>
-              <a href={`/areas/${a.slug}/`}>{a.name}</a>
+              <a href={href(`/areas/${a.slug}/`)}>{a.name}</a>
             </li>
           ))
         }
-        <li><a href="/reviews/">Reviews</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/contact/">Contact</a></li>
+        <li><a href={href("/reviews/")}>Reviews</a></li>
+        <li><a href={href("/about/")}>About</a></li>
+        <li><a href={href("/contact/")}>Contact</a></li>
       </ul>
     </div>
   </div>
@@ -78,7 +79,7 @@ import { areas } from "../data/areas";
     <span>WCB covered</span>
     <span>Insured and bonded</span>
     <span>© {brand.year} {brand.legalName}</span>
-    <a href="/privacy/">Privacy</a>
-    <a href="/terms/">Terms</a>
+    <a href={href("/privacy/")}>Privacy</a>
+    <a href={href("/terms/")}>Terms</a>
   </div>
 </footer>

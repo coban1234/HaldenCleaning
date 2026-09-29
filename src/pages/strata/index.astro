@@ -8,6 +8,7 @@ import { brand, images } from "../../data/brand";
 import { strataServices } from "../../data/services";
 import { faqs } from "../../data/reviews";
 import { serviceLd } from "../../data/schema";
+import { href } from "../../lib/href";
 ---
 
 <BaseLayout
@@ -38,7 +39,7 @@ import { serviceLd } from "../../data/schema";
   <section class="mx-auto max-w-page px-5 md:px-8 pb-16 grid md:grid-cols-2 gap-4">
     {
       strataServices.map((s) => (
-        <a href={`/strata/${s.slug}/`} class="bg-paper border border-line rounded-card p-5 hover:border-euc">
+        <a href={href(`/strata/${s.slug}/`)} class="bg-paper border border-line rounded-card p-5 hover:border-euc">
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{s.eyebrow}</p>
           <h2 class="mt-2 font-semibold fs-h3">{s.h1}</h2>
           <p class="mt-2 text-slate">{s.lead}</p>

@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import { guides, relatedGuides } from "../../data/guides";
 import { brand } from "../../data/brand";
+import { href } from "../../lib/href";
 
 export function getStaticPaths() {
   return guides.map((g) => ({ params: { slug: g.slug } }));
@@ -47,7 +48,7 @@ const related = relatedGuides(guide.slug);
         related.map((item) => (
           <li>
             <a
-              href={`/guides/${item.slug}/`}
+              href={href(`/guides/${item.slug}/`)}
               class="lift flex h-full flex-col bg-paper border border-line rounded-card p-5"
             >
               <h2 class="font-semibold fs-h3">{item.title}</h2>

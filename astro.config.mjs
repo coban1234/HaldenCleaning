@@ -13,7 +13,6 @@ export default defineConfig({
   base: githubPages ? "/HaldenCleaning/" : "/",
   trailingSlash: "always",
   redirects: {
-    "/our-team": "/",
     "/our-team/": "/",
   },
   integrations: [tailwind(), react(), sitemap()],

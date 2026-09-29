@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import { brand } from "../../data/brand";
 import { areas } from "../../data/areas";
+import { href } from "../../lib/href";
 ---
 
 <BaseLayout
@@ -19,7 +20,7 @@ import { areas } from "../../data/areas";
     <div class="mt-10 grid md:grid-cols-2 gap-5">
       {
         areas.map((area) => (
-          <a href={`/areas/${area.slug}/`} class="bg-paper border border-line rounded-card overflow-hidden hover:border-euc">
+          <a href={href(`/areas/${area.slug}/`)} class="bg-paper border border-line rounded-card overflow-hidden hover:border-euc">
             <img src={area.photo} alt={`Work in ${area.name}.`} class="w-full aspect-[16/9] object-cover" />
             <div class="p-5">
               <h2 class="font-semibold fs-h3">{area.name}</h2>

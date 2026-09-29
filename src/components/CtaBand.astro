@@ -3,6 +3,7 @@ type Props = { cta?: "book" | "walkthrough" };
 const { cta = "book" } = Astro.props;
 
 import { quotePrice } from "../data/pricing";
+import { href } from "../lib/href";
 
 const twoTwo = quotePrice(2, 2, "standard", "biweekly");
 const isBook = cta === "book";
@@ -41,13 +42,13 @@ const isBook = cta === "book";
             isBook ? (
               <>
                 <a
-                  href="/#quote"
+                  href={href("/#quote")}
                   class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h"
                 >
                   Get my price
                 </a>
                 <a
-                  href="/home-cleaning/whats-included/"
+                  href={href("/home-cleaning/whats-included/")}
                   class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-8 rounded-full border-[1.5px] border-ink font-semibold"
                 >
                   See what's included
@@ -55,7 +56,7 @@ const isBook = cta === "book";
               </>
             ) : (
               <a
-                href="/contact/"
+                href={href("/contact/")}
                 class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h"
               >
                 Request a walkthrough

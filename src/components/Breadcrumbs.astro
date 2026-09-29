@@ -1,5 +1,6 @@
 ---
 import { brand } from "../data/brand";
+import { href } from "../lib/href";
 
 type Crumb = { href?: string; label: string };
 type Props = { items: Crumb[] };
@@ -22,7 +23,7 @@ const jsonLd = {
       items.map((item, i) => (
         <li class="flex items-center gap-2">
           {i > 0 && <span aria-hidden="true">/</span>}
-          {item.href ? <a href={item.href} class="hover:text-euc">{item.label}</a> : <span class="text-ink">{item.label}</span>}
+          {item.href ? <a href={href(item.href)} class="hover:text-euc">{item.label}</a> : <span class="text-ink">{item.label}</span>}
         </li>
       ))
     }

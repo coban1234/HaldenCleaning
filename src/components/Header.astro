@@ -1,5 +1,6 @@
 ---
 import { brand, nav } from "../data/brand";
+import { href } from "../lib/href";
 import Logo from "./Logo.astro";
 
 type Props = {
@@ -18,7 +19,7 @@ const ctaMobile = cta === "book" ? "Book" : "Walkthrough";
     <nav class="hidden lg:flex items-center gap-4 xl:gap-7 text-[14px] xl:text-[15px] font-medium text-ink min-w-0" aria-label="Primary">
       {
         nav.map((item) => (
-          <a href={item.href} class="hover:text-euc">
+          <a href={href(item.href)} class="hover:text-euc">
             {item.label}
           </a>
         ))
@@ -26,7 +27,7 @@ const ctaMobile = cta === "book" ? "Book" : "Walkthrough";
     </nav>
     <div class="flex items-center gap-2 shrink-0">
       <a
-        href={ctaHref}
+        href={href(ctaHref)}
         class="inline-flex items-center justify-center min-h-10 px-3 xs:px-4 rounded-full bg-brass text-chalk text-[14px] font-semibold hover:bg-brass-h lg:min-h-12 lg:px-5 xl:min-h-[56px] xl:px-10 xl:text-[15px]"
       >
         <span class="lg:hidden">{ctaMobile}</span>
@@ -49,7 +50,7 @@ const ctaMobile = cta === "book" ? "Book" : "Walkthrough";
           <nav class="flex flex-col" aria-label="Mobile">
             {
               nav.map((item) => (
-                <a href={item.href} class="py-4 border-b border-line text-[17px] font-medium">
+                <a href={href(item.href)} class="py-4 border-b border-line text-[17px] font-medium">
                   {item.label}
                 </a>
               ))
@@ -57,7 +58,7 @@ const ctaMobile = cta === "book" ? "Book" : "Walkthrough";
           </nav>
           <div class="mt-auto pt-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] space-y-3">
             <a
-              href={ctaHref}
+              href={href(ctaHref)}
               class="flex items-center justify-center min-h-[56px] rounded-full bg-brass text-chalk text-[15px] font-semibold"
             >
               {ctaDesktop}

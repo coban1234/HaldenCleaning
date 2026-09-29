@@ -6,6 +6,7 @@ import {
   type Frequency,
   type ServiceLevel,
 } from "../data/pricing";
+import { href } from "../lib/href";
 
 const defaultQuote = quotePrice(2, 2, "standard", "biweekly");
 const pill =
@@ -79,14 +80,14 @@ const pill =
     </p>
     <div class="mt-6 space-y-2">
       <a
-        href="/book/?beds=2&baths=2&service=standard&freq=biweekly"
+        href={href("/book/?beds=2&baths=2&service=standard&freq=biweekly")}
         data-book
         class="flex items-center justify-center min-h-[56px] rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
       >
         Book this
       </a>
       <a
-        href="/home-cleaning/whats-included/"
+        href={href("/home-cleaning/whats-included/")}
         class="flex items-center justify-center min-h-[56px] rounded-full border-[1.5px] border-ink text-ink text-[15px] font-semibold"
       >
         See what's included →
@@ -97,6 +98,7 @@ const pill =
 
 <script>
   import { quotePrice } from "../data/pricing";
+  import { href } from "../lib/href";
 
   function selected(root: Element, group: string) {
     return (root.querySelector(`[data-group="${group}"] [aria-pressed="true"]`) as HTMLElement)
@@ -139,19 +141,20 @@ const pill =
       durationEl.textContent = result.duration;
       promiseEl.textContent = "5 bed+ is quoted after a walkthrough.";
       saveEl.textContent = "";
-      book.href = "/contact/";
+      book.href = href("/contact/");
       book.textContent = "Request a walkthrough";
-      publish({ price: null, href: "/contact/" });
+      publish({ price: null, href: href("/contact/") });
     } else {
       priceEl.textContent = `$${result.price}`;
       durationEl.textContent = result.duration;
       promiseEl.textContent = "Flat rate. This is the price.";
       saveEl.textContent = result.savings > 0 ? `Save $${result.savings} against one-time.` : "";
-      book.href = `/book/?beds=${beds}&baths=${baths}&service=${service}&freq=${freq}`;
+      const bookHref = href(`/book/?beds=${beds}&baths=${baths}&service=${service}&freq=${freq}`);
+      book.href = bookHref;
       book.textContent = "Book this";
       publish({
         price: `$${result.price}`,
-        href: `/book/?beds=${beds}&baths=${baths}&service=${service}&freq=${freq}`,
+        href: bookHref,
       });
     }
   }

@@ -6,6 +6,7 @@ import QuoteTable from "../components/QuoteTable.astro";
 import { brand } from "../data/brand";
 import { addOns, commercialRanges } from "../data/pricing";
 import { localBusinessLd } from "../data/schema";
+import { href } from "../lib/href";
 ---
 
 <BaseLayout
@@ -84,7 +85,7 @@ import { localBusinessLd } from "../data/schema";
         the scoping method, the amenity checklist, inspection reporting, and adjacent services.
       </p>
       <p class="mt-4">
-        <a href="/strata/" class="text-euc underline underline-offset-4">Open the strata scope builder →</a>
+        <a href={href("/strata/")} class="text-euc underline underline-offset-4">Open the strata scope builder →</a>
       </p>
     </section>
   </article>

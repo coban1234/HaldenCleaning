@@ -9,6 +9,7 @@ import { areas } from "../data/areas";
 import { quotePrice } from "../data/pricing";
 import { reviews } from "../data/reviews";
 import { guides } from "../data/guides";
+import { href } from "../lib/href";
 
 const featuredReview = reviews[0];
 
@@ -20,21 +21,21 @@ const prices = [
     label: "Studio / 1 bed",
     price: studio.price,
     meta: "Standard · 1 bath",
-    href: "/book/?beds=1&baths=1&service=standard&freq=onetime",
+    href: href("/book/?beds=1&baths=1&service=standard&freq=onetime"),
     featured: false,
   },
   {
     label: "2 bed, 2 bath",
     price: twoTwo.price,
     meta: "Standard · bi-weekly",
-    href: "/book/?beds=2&baths=2&service=standard&freq=biweekly",
+    href: href("/book/?beds=2&baths=2&service=standard&freq=biweekly"),
     featured: true,
   },
   {
     label: "3 bed, 2 bath",
     price: threeTwo.price,
     meta: "Standard",
-    href: "/book/?beds=3&baths=2&service=standard&freq=onetime",
+    href: href("/book/?beds=3&baths=2&service=standard&freq=onetime"),
     featured: false,
   },
 ];
@@ -103,7 +104,7 @@ const prices = [
       A property manager and a homeowner should never have to read past each other's content.
     </p>
     <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <a href="/home-cleaning/" class="lift bg-paper border border-line rounded-card overflow-hidden">
+      <a href={href("/home-cleaning/")} class="lift bg-paper border border-line rounded-card overflow-hidden">
         <img src={images.residential} alt="Residential kitchen after a recurring clean." class="w-full aspect-[3/2] object-cover" />
         <div class="p-5">
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Residential</p>
@@ -111,7 +112,7 @@ const prices = [
           <p class="mt-1 text-slate text-[15px]">Flat rate by home size. Book online in minutes.</p>
         </div>
       </a>
-      <a href="/commercial/" class="lift bg-paper border border-line rounded-card overflow-hidden">
+      <a href={href("/commercial/")} class="lift bg-paper border border-line rounded-card overflow-hidden">
         <img src={images.commercial} alt="Daylit office interior for commercial janitorial." class="w-full aspect-[3/2] object-cover" />
         <div class="p-5">
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Commercial</p>
@@ -119,7 +120,7 @@ const prices = [
           <p class="mt-1 text-slate text-[15px]">Per square foot, per month. Request a walkthrough.</p>
         </div>
       </a>
-      <a href="/strata/" class="lift bg-paper border border-line rounded-card overflow-hidden">
+      <a href={href("/strata/")} class="lift bg-paper border border-line rounded-card overflow-hidden">
         <img src={images.strata} alt="Residential tower exterior for strata common-area programs." class="w-full aspect-[3/2] object-cover" />
         <div class="p-5">
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Strata</p>
@@ -194,7 +195,7 @@ const prices = [
       }
     </div>
     <p class="mt-6 text-[15px]">
-      <a href="/pricing/" class="text-euc font-medium underline underline-offset-4"
+      <a href={href("/pricing/")} class="text-euc font-medium underline underline-offset-4"
         >Full rate table, commercial and strata →</a
       >
     </p>
@@ -211,7 +212,7 @@ const prices = [
           </footer>
         </blockquote>
         <p class="mt-auto pt-8">
-          <a href="/reviews/" class="text-euc font-medium underline underline-offset-4">All reviews →</a>
+          <a href={href("/reviews/")} class="text-euc font-medium underline underline-offset-4">All reviews →</a>
         </p>
       </article>
       <article class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-line flex flex-col">
@@ -221,7 +222,7 @@ const prices = [
             areas.map((area) => (
               <li>
                 <a
-                  href={`/areas/${area.slug}/`}
+                  href={href(`/areas/${area.slug}/`)}
                   class="flex min-h-[44px] items-center justify-between gap-3 py-2 font-medium hover:text-euc"
                 >
                   {area.name}
@@ -232,7 +233,7 @@ const prices = [
           }
         </ul>
         <p class="mt-auto pt-8">
-          <a href="/areas/" class="text-euc font-medium underline underline-offset-4">All areas →</a>
+          <a href={href("/areas/")} class="text-euc font-medium underline underline-offset-4">All areas →</a>
         </p>
       </article>
       <article class="p-6 md:p-8 flex flex-col">
@@ -241,7 +242,7 @@ const prices = [
           {
             guides.filter((guide) => guide.featured).map((guide) => (
               <li>
-                <a href={`/guides/${guide.slug}/`} class="font-semibold leading-snug hover:text-euc">
+                <a href={href(`/guides/${guide.slug}/`)} class="font-semibold leading-snug hover:text-euc">
                   {guide.title}
                 </a>
               </li>
@@ -249,7 +250,7 @@ const prices = [
           }
         </ul>
         <p class="mt-auto pt-8">
-          <a href="/guides/" class="text-euc font-medium underline underline-offset-4">All guides →</a>
+          <a href={href("/guides/")} class="text-euc font-medium underline underline-offset-4">All guides →</a>
         </p>
       </article>
     </div>

@@ -1,6 +1,7 @@
 ---
 import { rooms } from "../data/rooms";
 import { quotePrice } from "../data/pricing";
+import { href } from "../lib/href";
 
 const kitchen = rooms[0];
 const studio = quotePrice(1, 1, "standard", "onetime");
@@ -12,21 +13,21 @@ const prices = [
     label: "Studio / 1 bed",
     price: studio.price,
     meta: "Standard · 1 bath",
-    href: "/book/?beds=1&baths=1&service=standard&freq=onetime",
+    href: href("/book/?beds=1&baths=1&service=standard&freq=onetime"),
     featured: false,
   },
   {
     label: "2 bed, 2 bath",
     price: twoTwo.price,
     meta: "Standard · bi-weekly",
-    href: "/book/?beds=2&baths=2&service=standard&freq=biweekly",
+    href: href("/book/?beds=2&baths=2&service=standard&freq=biweekly"),
     featured: true,
   },
   {
     label: "3 bed, 2 bath",
     price: threeTwo.price,
     meta: "Standard",
-    href: "/book/?beds=3&baths=2&service=standard&freq=onetime",
+    href: href("/book/?beds=3&baths=2&service=standard&freq=onetime"),
     featured: false,
   },
 ];
@@ -74,7 +75,7 @@ const prices = [
           }
         </ul>
         <p class="mt-4 text-[13px]">
-          <a href="/home-cleaning/whats-included/" class="text-euc font-medium underline underline-offset-4"
+          <a href={href("/home-cleaning/whats-included/")} class="text-euc font-medium underline underline-offset-4"
             >Every room, every check →</a
           >
         </p>
@@ -108,7 +109,7 @@ const prices = [
           }
         </div>
         <p class="mt-3 text-[13px]">
-          <a href="/pricing/" class="text-euc font-medium underline underline-offset-4"
+          <a href={href("/pricing/")} class="text-euc font-medium underline underline-offset-4"
             >All three segments, published →</a
           >
         </p>

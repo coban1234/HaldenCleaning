@@ -9,6 +9,7 @@ import {
   type Frequency,
   type ServiceLevel,
 } from "../data/pricing";
+import { href } from "../lib/href";
 
 const steps = ["Your home", "Service", "When", "Details"] as const;
 const field =
@@ -103,7 +104,7 @@ export default function BookingFlow({
         setError("");
         setSending(true);
         try {
-          const res = await fetch("/api/book/", {
+          const res = await fetch(href("/api/book/"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
