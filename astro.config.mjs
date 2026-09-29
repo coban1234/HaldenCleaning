@@ -3,8 +3,10 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
+import vercel from "@astrojs/vercel";
 
 const githubPages = process.env.GITHUB_PAGES === "true";
+const onVercel = Boolean(process.env.VERCEL);
 
 export default defineConfig({
   site: githubPages
@@ -17,5 +19,5 @@ export default defineConfig({
   },
   integrations: [tailwind(), react(), sitemap()],
   output: "static",
-  adapter: node({ mode: "standalone" }),
+  adapter: onVercel ? vercel() : node({ mode: "standalone" }),
 });
