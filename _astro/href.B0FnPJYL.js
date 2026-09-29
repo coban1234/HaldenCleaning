@@ -1,0 +1,1 @@
+function s(t){return t.startsWith("http://")||t.startsWith("https://")||t.startsWith("mailto:")||t.startsWith("tel:")||t.startsWith("#")?t:`${"/HaldenCleaning/".endsWith("/")?"/HaldenCleaning/":"/HaldenCleaning//"}${t.replace(/^\//,"")}`}export{s as h};
