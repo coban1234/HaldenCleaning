@@ -1,0 +1,51 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import TeamFilter from "../components/TeamFilter";
+import TeamGrid from "../components/TeamGrid.astro";
+import { brand } from "../data/brand";
+import { team } from "../data/team";
+import { vetting } from "../data/team";
+---
+
+<BaseLayout
+  title={`Bonded Insured Cleaners Vancouver | Our Team | ${brand.name}`}
+  description="Named cleaners, criminal record checks, bonded and WCB covered. Filter by Vancouver, Burnaby, Richmond, North Vancouver, Surrey or Coquitlam."
+  canonical="/our-team/"
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Our team" }]} />
+    <h1 class="display mt-6 font-semibold fs-hero">The same team, every visit.</h1>
+    <p class="mt-3 max-w-[50ch] text-slate fs-lead">
+      Real portraits, first names, years with the company, languages spoken. This page is why the
+      claim is credible.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-1.5">
+      {
+        vetting.map((badge) => (
+          <span class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc bg-euc-tint rounded-full px-2.5 py-1">
+            {badge}
+          </span>
+        ))
+      }
+    </div>
+    <div class="mt-10">
+      <TeamFilter client:load />
+      <noscript>
+        <TeamGrid people={team} />
+      </noscript>
+    </div>
+    <section class="mt-16 max-w-[66ch]">
+      <h2 class="display font-semibold fs-h2">Vetting</h2>
+      <p class="mt-3 text-slate">
+        Criminal record check, bonded, WCB covered, and years with us. Four facts, no shields. In this
+        category the words are the reassurance; decoration undermines them.
+      </p>
+      <h2 class="display font-semibold fs-h2 mt-10">Training</h2>
+      <p class="mt-3 text-slate">
+        New crew members shadow a named lead for ten visits before they run a home alone. Product
+        names, checkpoint order, and access protocol are written — not left to memory.
+      </p>
+    </section>
+  </article>
+</BaseLayout>

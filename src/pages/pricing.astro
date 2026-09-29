@@ -1,0 +1,91 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import QuoteWidget from "../components/QuoteWidget.astro";
+import QuoteTable from "../components/QuoteTable.astro";
+import { brand } from "../data/brand";
+import { addOns, commercialRanges } from "../data/pricing";
+import { localBusinessLd } from "../data/schema";
+---
+
+<BaseLayout
+  title={`House Cleaning Cost Vancouver | Flat Rate | ${brand.name}`}
+  description="Published flat rates for house cleaning in Vancouver, plus indicative commercial ranges and how strata is scoped. No email required to see a residential price."
+  canonical="/pricing/"
+  jsonLd={[
+    localBusinessLd(),
+    {
+      "@context": "https://schema.org",
+      "@type": "Offer",
+      priceCurrency: "CAD",
+      priceRange: "$$",
+      url: "https://thresholdcleaning.ca/pricing/",
+    },
+  ]}
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Pricing" }]} />
+    <h1 class="display mt-6 font-semibold fs-hero">Published pricing</h1>
+    <p class="mt-3 max-w-[50ch] text-slate fs-lead">
+      Residential is a single number. Commercial is a range. Strata is scoped per building. All three
+      are on this page.
+    </p>
+
+    <section class="mt-12" id="quote">
+      <h2 class="display font-semibold fs-h2">Residential — flat rate</h2>
+      <p class="mt-2 text-slate mb-8 max-w-[66ch]">
+        The price you are quoted is the price you pay. If a home takes longer than we estimated, that
+        is our problem, not your invoice. If it takes less, the price is still the price.
+      </p>
+      <QuoteWidget />
+      <div class="mt-10">
+        <QuoteTable />
+      </div>
+      <h3 class="font-semibold fs-h3 mt-10">Add-ons</h3>
+      <ul class="mt-4 grid md:grid-cols-2 gap-2 tabular">
+        {
+          addOns.map((item) => (
+            <li class="flex justify-between border-b border-line py-2">
+              <span>{item.label}</span>
+              <span>${item.price}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="display font-semibold fs-h2">Commercial — indicative</h2>
+      <p class="mt-2 text-slate mb-6">Confirmed at walkthrough. Per square foot $0.10–$0.30.</p>
+      <table class="w-full bg-paper border border-line rounded-card tabular">
+        <thead>
+          <tr class="text-left text-[13px] uppercase tracking-[0.06em] text-slate">
+            <th class="px-4 py-3">Frequency, small office</th>
+            <th class="px-4 py-3">Indicative monthly</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            commercialRanges.map((row) => (
+              <tr class="border-t border-line">
+                <td class="px-4 py-3">{row.frequency}</td>
+                <td class="px-4 py-3">{row.monthly}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="display font-semibold fs-h2">Strata — scoped per building</h2>
+      <p class="mt-3 text-slate max-w-[66ch]">
+        No published figure. Scope is driven by common-area size and amenity count. What is published:
+        the scoping method, the amenity checklist, inspection reporting, and adjacent services.
+      </p>
+      <p class="mt-4">
+        <a href="/strata/" class="text-euc underline underline-offset-4">Open the strata scope builder →</a>
+      </p>
+    </section>
+  </article>
+</BaseLayout>

@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-chalk: #f6f4ef;
+  --c-paper: #ffffff;
+  --c-stone: #eae5dc;
+  --c-line: #ded8cc;
+  --c-ink: #1e2420;
+  --c-slate: #5c665e;
+  --c-euc: #3a5a4a;
+  --c-euc-lt: #8fae9b;
+  --c-euc-dk: #24382d;
+  --c-euc-tint: #e4ebe5;
+  --c-brass: #a87b32;
+  --c-brass-h: #8c6526;
+  --c-brass-tn: #f2e9d8;
+  --fs-hero: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
+  --fs-h2: clamp(1.875rem, 1.4rem + 2.2vw, 3rem);
+  --fs-h3: clamp(1.1875rem, 1.1rem + 0.5vw, 1.4375rem);
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.45vw, 1.375rem);
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+}
+
+html {
+  font-family: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  background: var(--c-chalk);
+  color: var(--c-ink);
+  font-size: 17px;
+  line-height: 1.68;
+  scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@media (max-width: 767px) {
+  html.sticky-bar-on {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+body:has(header details[open]) {
+  overflow: hidden;
+}
+
+header details:not([open]) .nav-sheet {
+  display: none;
+}
+
+.display {
+  font-family: "Fraunces", ui-serif, Georgia, serif;
+  font-variation-settings: "opsz" 144, "WONK" 0;
+  text-wrap: pretty;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.fs-hero {
+  font-size: var(--fs-hero);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.fs-h2 {
+  font-size: var(--fs-h2);
+}
+.fs-h3 {
+  font-size: var(--fs-h3);
+}
+.fs-lead {
+  font-size: var(--fs-lead);
+  text-wrap: pretty;
+}
+.fs-small {
+  font-size: var(--fs-small);
+}
+
+:focus-visible {
+  outline: 3px solid var(--c-euc);
+  outline-offset: 2px;
+}
+
+.lift {
+  transition:
+    border-color 200ms ease,
+    transform 200ms ease;
+}
+.lift:hover {
+  border-color: var(--c-euc);
+  transform: translateY(-2px);
+}
+
+@media (hover: none) {
+  .lift:hover {
+    transform: none;
+  }
+}
+
+.field {
+  min-height: 52px;
+  font-size: 16px;
+  width: 100%;
+  border: 1px solid var(--c-line);
+  border-radius: 10px;
+  padding-inline: 12px;
+  background: var(--c-paper);
+  color: var(--c-ink);
+}
+
+.section-y {
+  padding-block: 72px;
+}
+@media (min-width: 768px) {
+  .section-y {
+    padding-block: 128px;
+  }
+}
+
+.photo-inset {
+  padding-inline: 16px;
+}
+@media (min-width: 480px) {
+  .photo-inset {
+    padding-inline: 20px;
+  }
+}
+@media (min-width: 768px) {
+  .photo-inset {
+    padding-inline: 32px;
+  }
+}
+@media (min-width: 1440px) {
+  .photo-inset {
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+}
+
+.sticky-bar {
+  transform: translateY(100%);
+  transition: transform 200ms ease;
+}
+.sticky-bar.is-visible {
+  transform: translateY(0);
+}
+
+.booking-step {
+  display: none;
+}
+.booking-step.is-active {
+  display: block;
+}
+@media (min-width: 1280px) {
+  .booking-step {
+    display: block;
+  }
+}
+
+@keyframes check-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.check-item {
+  animation: check-in 300ms ease both;
+}
+
+.check-item:nth-child(1) {
+  animation-delay: 0ms;
+}
+.check-item:nth-child(2) {
+  animation-delay: 40ms;
+}
+.check-item:nth-child(3) {
+  animation-delay: 80ms;
+}
+.check-item:nth-child(4) {
+  animation-delay: 120ms;
+}
+.check-item:nth-child(5) {
+  animation-delay: 160ms;
+}
+.check-item:nth-child(6) {
+  animation-delay: 200ms;
+}
+.check-item:nth-child(7) {
+  animation-delay: 240ms;
+}
+.check-item:nth-child(8) {
+  animation-delay: 280ms;
+}
+.check-item:nth-child(9) {
+  animation-delay: 320ms;
+}
+.check-item:nth-child(10) {
+  animation-delay: 360ms;
+}
+.check-item:nth-child(11) {
+  animation-delay: 400ms;
+}
+.check-item:nth-child(12) {
+  animation-delay: 440ms;
+}
+.check-item:nth-child(13) {
+  animation-delay: 480ms;
+}
+
+@keyframes price-swap {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.price-swap {
+  animation: price-swap 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .check-item,
+  .price-swap,
+  .sticky-bar,
+  .lift {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.option-pill {
+  min-height: 52px;
+  min-width: 0;
+  padding-inline: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--c-line);
+  font-size: 15px;
+  font-weight: 500;
+  background: var(--c-paper);
+  color: var(--c-ink);
+}
+
+.option-pill[aria-pressed="true"],
+.option-pill:checked + span,
+input:checked + .option-pill {
+  border: 2px solid var(--c-euc);
+  background: var(--c-euc-tint);
+  font-weight: 600;
+}

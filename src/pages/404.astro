@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { brand } from "../data/brand";
+---
+
+<BaseLayout
+  title={`Page not found | ${brand.name}`}
+  description="That page is not on this site."
+  canonical="/404/"
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-24">
+    <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">404</p>
+    <h1 class="display mt-3 font-semibold fs-hero">This room is not on the list.</h1>
+    <p class="mt-4 text-slate max-w-[40ch]">
+      The page may have moved. The quote, the room list and booking are still where they were.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/" class="min-h-[56px] px-8 rounded-full bg-brass text-chalk font-semibold inline-flex items-center">Home</a>
+      <a href="/home-cleaning/whats-included/" class="min-h-[56px] px-8 rounded-full border-[1.5px] border-ink font-semibold inline-flex items-center">What's included</a>
+    </div>
+  </article>
+</BaseLayout>

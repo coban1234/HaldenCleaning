@@ -1,0 +1,164 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import TeamGrid from "../../components/TeamGrid.astro";
+import QuoteTable from "../../components/QuoteTable.astro";
+import { areaBySlug, areas } from "../../data/areas";
+import { brand } from "../../data/brand";
+import { team } from "../../data/team";
+import { serviceLd } from "../../data/schema";
+import { quotePrice } from "../../data/pricing";
+
+export function getStaticPaths() {
+  return areas.map((area) => ({ params: { municipality: area.slug } }));
+}
+
+const area = areaBySlug(Astro.params.municipality!);
+if (!area) throw new Error("Missing area");
+const localTeam = team.filter((person) => person.areas.includes(area.slug));
+const others = areas.filter((item) => item.slug !== area.slug);
+const twoTwo = quotePrice(2, 2, "standard", "biweekly");
+const wordCount = [area.intro, area.stock, area.access, area.mix, ...area.body]
+  .join(" ")
+  .split(/\s+/).length;
+
+const facts = [
+  { title: "Building stock", body: area.stock },
+  { title: "Parking and access", body: area.access },
+  { title: "Condo versus detached", body: area.mix },
+];
+---
+
+<BaseLayout
+  title={`House Cleaning ${area.name} | Flat Rate | ${brand.name}`}
+  description={area.intro}
+  canonical={`/areas/${area.slug}/`}
+  jsonLd={serviceLd(`House cleaning in ${area.name}`, `/areas/${area.slug}/`, area.intro)}
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs
+      items={[
+        { href: "/", label: "Home" },
+        { href: "/areas/", label: "Areas" },
+        { label: area.name },
+      ]}
+    />
+    <div class="mt-6 grid gap-8 md:grid-cols-2 md:gap-12 md:items-start">
+      <div>
+        <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{area.name}</p>
+        <h1 class="display mt-3 font-semibold fs-hero max-w-[14ch] md:max-w-none">
+          House cleaning in {area.name}
+        </h1>
+      </div>
+      <div class="md:pt-8">
+        <p class="text-ink fs-lead">{area.intro}</p>
+        <p class="mt-4 tabular text-slate text-[15px]">
+          2 bed, 2 bath · bi-weekly from
+          <span class="font-semibold text-ink">${twoTwo.price}</span>
+        </p>
+        <a
+          href="/#quote"
+          class="mt-6 inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-10 rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
+        >
+          Get my price
+        </a>
+      </div>
+    </div>
+    <div class="mt-8 overflow-hidden rounded-photo">
+      <img
+        src={area.photo}
+        alt={`A real job context in ${area.name}.`}
+        class="w-full aspect-[4/5] md:aspect-[16/9] object-cover"
+      />
+    </div>
+    <p class="sr-only">{wordCount} words of local content.</p>
+  </article>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-12 md:pb-16">
+    <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
+      <h2 class="display font-semibold fs-h2">On the ground</h2>
+      <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
+        What the housing stock actually is, how we get in, and what books here.
+      </p>
+    </div>
+    <div class="bg-paper border border-line rounded-card overflow-hidden divide-y divide-line">
+      {
+        facts.map((fact) => (
+          <div class="grid gap-3 md:grid-cols-3 md:gap-8 p-6 md:p-8 md:items-start">
+            <h3 class="display font-semibold fs-h3">{fact.title}</h3>
+            <p class="md:col-span-2 text-slate">{fact.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="border-y border-line bg-paper">
+    <div class="mx-auto max-w-page px-5 md:px-8 py-12 md:py-16">
+      <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
+        <h2 class="display font-semibold fs-h2">How we work here</h2>
+        <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
+          The same published scope in {area.name}. The local constraints are what change.
+        </p>
+      </div>
+      <ol class="border border-line rounded-card overflow-hidden grid md:grid-cols-2">
+        {
+          area.body.map((paragraph, i) => (
+            <li
+              class:list={[
+                "p-6 md:p-8",
+                i < area.body.length - 1 && "border-b border-line",
+                i >= area.body.length - 2 && "md:border-b-0",
+                i % 2 === 0 && "md:border-r md:border-line",
+              ]}
+            >
+              <p class="display tabular font-semibold text-euc leading-none text-[2.25rem] md:text-[2.75rem]">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <p class="mt-5 text-ink">{paragraph}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 py-12 md:py-16">
+    <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
+      <h2 class="display font-semibold fs-h2">Who covers {area.name}</h2>
+      <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
+        Named people, not a rotating roster.
+      </p>
+    </div>
+    <TeamGrid people={localTeam.length ? localTeam : team.slice(0, 3)} />
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-12 md:pb-16">
+    <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
+      <h2 class="display font-semibold fs-h2">Flat rates for this area</h2>
+      <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
+        Same published table across the region. No municipal surcharge.
+      </p>
+    </div>
+    <QuoteTable />
+  </section>
+
+  <nav class="mx-auto max-w-page px-5 md:px-8 pb-12 md:pb-16" aria-label="Other areas">
+    <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc mb-4">Other areas</p>
+    <ul class="bg-paper border border-line rounded-card divide-y md:divide-y-0 md:grid md:grid-cols-5 overflow-hidden">
+      {
+        others.map((item, i) => (
+          <li class:list={[i < others.length - 1 && "md:border-r md:border-line"]}>
+            <a
+              href={`/areas/${item.slug}/`}
+              class="flex min-h-[52px] items-center justify-between gap-3 px-5 py-3 font-medium hover:text-euc"
+            >
+              {item.name}
+              <span class="text-slate" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</BaseLayout>

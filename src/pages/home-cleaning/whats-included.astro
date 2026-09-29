@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import RoomExplorer from "../../components/RoomExplorer.astro";
+import { brand } from "../../data/brand";
+import { rooms, totalChecks } from "../../data/rooms";
+import { serviceLd } from "../../data/schema";
+---
+
+<BaseLayout
+  title={`What's Included in a House Cleaning | Room by Room | ${brand.name}`}
+  description="Every room, every check. See what a standard, deep and move-out clean includes in Vancouver — including add-ons like inside oven, fridge and cabinets."
+  canonical="/home-cleaning/whats-included/"
+  jsonLd={serviceLd(
+    "What's included in a house cleaning",
+    "/home-cleaning/whats-included/",
+    "Room-by-room checkpoint lists for standard, deep and move-out house cleaning.",
+  )}
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs
+      items={[
+        { href: "/", label: "Home" },
+        { href: "/home-cleaning/", label: "Home cleaning" },
+        { label: "What's included" },
+      ]}
+    />
+    <p class="mt-6 text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">What's included</p>
+    <h1 class="display mt-3 font-semibold fs-hero">Every room, every check</h1>
+    <p class="mt-3 max-w-[50ch] text-slate fs-lead">
+      {totalChecks("standard")} checks on a standard visit, across {rooms.length} rooms. Add-ons sit
+      inside the list, not after the invoice.
+    </p>
+    <div class="mt-10">
+      <RoomExplorer layout="page" />
+    </div>
+
+    <section class="mt-16 prose-none">
+      <h2 class="display font-semibold fs-h2">All rooms, stacked</h2>
+      <p class="mt-2 text-slate mb-8 max-w-[66ch]">
+        The interactive picker is optional. The lists below are the source of truth and exist in the
+        page HTML.
+      </p>
+      {
+        rooms.map((room) => (
+          <section class="mb-10 bg-paper border border-line rounded-card p-6">
+            <h3 class="font-semibold fs-h3">{room.name}</h3>
+            <p class="text-slate text-[15px] mt-1">Standard visit · approx. {room.minutes} min</p>
+            <ul class="mt-4 space-y-2">
+              {room.included.standard.map((item) => (
+                <li class="flex gap-3">
+                  <span class="text-euc">✓</span>
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+            {room.addons.standard.length > 0 && (
+              <ul class="mt-4 space-y-2">
+                {room.addons.standard.map((item) => (
+                  <li class="flex justify-between gap-3 text-slate">
+                    <span class="flex gap-3">
+                      <span>○</span>
+                      {item.label}
+                    </span>
+                    <span class="tabular">+${item.addon}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))
+      }
+    </section>
+  </article>
+</BaseLayout>

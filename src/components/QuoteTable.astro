@@ -1,0 +1,71 @@
+---
+import { rateRows, oneTimeRates } from "../data/pricing";
+---
+
+<div class="md:hidden space-y-3">
+  {
+    rateRows.map((row) => {
+      const rates = oneTimeRates[row.key];
+      return (
+        <article class="bg-paper border border-line rounded-card p-4">
+          <p class="font-semibold">{row.label}</p>
+          <dl class="mt-3 grid grid-cols-3 gap-2 tabular text-center">
+            <div>
+              <dt class="text-[11px] font-semibold tracking-[0.06em] uppercase text-slate">Standard</dt>
+              <dd class="mt-1 font-semibold">${rates.standard}</dd>
+            </div>
+            <div>
+              <dt class="text-[11px] font-semibold tracking-[0.06em] uppercase text-slate">Deep</dt>
+              <dd class="mt-1 font-semibold">${rates.deep}</dd>
+            </div>
+            <div>
+              <dt class="text-[11px] font-semibold tracking-[0.06em] uppercase text-slate">Move-out</dt>
+              <dd class="mt-1 font-semibold">${rates["move-out"]}</dd>
+            </div>
+          </dl>
+        </article>
+      );
+    })
+  }
+  <article class="bg-paper border border-line rounded-card p-4">
+    <p class="font-semibold">5 bed+</p>
+    <p class="mt-2 text-slate">Quoted after a walkthrough</p>
+  </article>
+</div>
+
+<div class="hidden md:block">
+  <table class="w-full text-left border border-line rounded-card overflow-hidden bg-paper tabular">
+    <caption class="sr-only">Residential flat-rate table (one-time visit)</caption>
+    <thead class="bg-stone text-[13px] font-semibold tracking-[0.06em] uppercase text-slate">
+      <tr>
+        <th class="px-4 py-3">Home size</th>
+        <th class="px-4 py-3">Standard</th>
+        <th class="px-4 py-3">Deep</th>
+        <th class="px-4 py-3">Move-out</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rateRows.map((row) => {
+          const rates = oneTimeRates[row.key];
+          return (
+            <tr class="border-t border-line">
+              <td class="px-4 py-3">{row.label}</td>
+              <td class="px-4 py-3">${rates.standard}</td>
+              <td class="px-4 py-3">${rates.deep}</td>
+              <td class="px-4 py-3">${rates["move-out"]}</td>
+            </tr>
+          );
+        })
+      }
+      <tr class="border-t border-line">
+        <td class="px-4 py-3">5 bed+</td>
+        <td class="px-4 py-3" colspan="3">Quoted after a walkthrough</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class="mt-3 text-[15px] text-slate">
+  Table shows one-time rates. Weekly 20% off, bi-weekly 15% off, monthly 10% off — applied live in
+  the quote. Recurring discounts are against one-time, not stacked.
+</p>

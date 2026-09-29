@@ -1,0 +1,96 @@
+---
+import { brand } from "../data/brand";
+import { quotePrice } from "../data/pricing";
+
+type Props = { cta?: "book" | "walkthrough" };
+const { cta = "book" } = Astro.props;
+const defaultQuote = quotePrice(2, 2, "standard", "biweekly");
+---
+
+{
+  cta === "book" ? (
+    <nav
+      class="sticky-bar md:hidden fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 bg-paper border-t border-line pb-[env(safe-area-inset-bottom)]"
+      data-sticky-bar
+      aria-label="Primary actions"
+    >
+      <a
+        href="/#quote"
+        class="flex items-center justify-center min-h-[56px] px-2 text-center text-[13px] xs:text-[15px] font-semibold border-r border-line"
+      >
+        Get my price
+      </a>
+      <a
+        href="/book/?beds=2&baths=2&service=standard&freq=biweekly"
+        data-sticky-book
+        class="flex flex-col items-center justify-center min-h-[56px] px-2 bg-brass text-chalk text-center font-semibold tabular leading-tight"
+      >
+        <span data-sticky-price class="text-[15px]">${defaultQuote.price}</span>
+        <span class="text-[12px] font-semibold">Book now</span>
+      </a>
+    </nav>
+  ) : (
+    <nav
+      class="sticky-bar md:hidden fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 bg-paper border-t border-line pb-[env(safe-area-inset-bottom)]"
+      data-sticky-bar
+      aria-label="Primary actions"
+    >
+      <a
+        href="/contact/"
+        class="flex flex-col items-center justify-center min-h-[56px] bg-brass text-chalk text-center font-semibold leading-tight px-2"
+      >
+        <span class="text-[13px] xs:text-[15px]">Walkthrough</span>
+      </a>
+      <a
+        href={brand.phoneHref}
+        class="flex items-center justify-center min-h-[56px] text-[15px] font-semibold"
+      >
+        Call
+      </a>
+    </nav>
+  )
+}
+
+<script>
+  const bar = document.querySelector("[data-sticky-bar]");
+  const book = document.querySelector("[data-sticky-book]") as HTMLAnchorElement | null;
+
+  function storedQuote() {
+    try {
+      return JSON.parse(sessionStorage.getItem("threshold-quote") || "null");
+    } catch {
+      return null;
+    }
+  }
+
+  function applyQuote(detail: { price?: string | null; href?: string }) {
+    if (!book) return;
+    const priceEl = book.querySelector("[data-sticky-price]");
+    if (detail.price) {
+      if (priceEl) priceEl.textContent = detail.price;
+      else book.textContent = `${detail.price} · Book now`;
+      if (detail.href) book.href = detail.href;
+    } else if (detail.href) {
+      if (priceEl) priceEl.textContent = "Walkthrough";
+      book.href = detail.href;
+    }
+  }
+
+  const saved = storedQuote();
+  if (saved) applyQuote(saved);
+
+  function onScroll() {
+    const shown = window.scrollY > 200;
+    bar?.classList.toggle("is-visible", shown);
+    document.documentElement.classList.toggle("sticky-bar-on", shown);
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  window.addEventListener("quote:update", ((event: CustomEvent) => {
+    const detail = event.detail as { price?: string | null; href?: string };
+    applyQuote(detail);
+    sessionStorage.setItem("threshold-quote", JSON.stringify(detail));
+  }) as EventListener);
+</script>

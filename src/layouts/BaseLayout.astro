@@ -1,0 +1,64 @@
+---
+type Props = {
+  title: string;
+  description: string;
+  canonical: string;
+  cta?: "book" | "walkthrough";
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  sticky?: boolean;
+};
+
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CtaBand from "../components/CtaBand.astro";
+import StickyBar from "../components/StickyBar.astro";
+import { brand } from "../data/brand";
+import "../styles/global.css";
+
+const { title, description, canonical, cta = "book", jsonLd, sticky = true } = Astro.props;
+const url = canonical.startsWith("http") ? canonical : `${brand.domain}${canonical}`;
+const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_CA" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter+Tight:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <slot name="head" />
+    {
+      blocks.map((block) => (
+        <script type="application/ld+json" set:html={JSON.stringify(block)} />
+      ))
+    }
+  </head>
+  <body class="bg-chalk text-ink antialiased min-h-screen flex flex-col">
+    <a
+      href="#content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 bg-paper px-4 py-2 rounded-card"
+      >Skip to content</a
+    >
+    <Header cta={cta} />
+    <main id="content" class="flex-1">
+      <slot />
+    </main>
+    <CtaBand cta={cta} />
+    <Footer />
+    {sticky && <StickyBar cta={cta} />}
+  </body>
+</html>

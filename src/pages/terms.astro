@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { brand } from "../data/brand";
+---
+
+<BaseLayout title={`Terms | ${brand.name}`} description="Terms of service." canonical="/terms/">
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8 max-w-[720px]">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Terms" }]} />
+    <h1 class="display mt-6 font-semibold fs-hero">Terms</h1>
+    <p class="mt-6 text-slate">
+      Residential work is quoted as a flat rate. The confirmation email, including the room-by-room
+      scope, is the document both sides work from. Payment is taken at the visit unless agreed
+      otherwise in writing. Recurring residential service may be cancelled at any time. Commercial and
+      strata contracts follow the service agreement issued after walkthrough. Cancellation windows for
+      a booked visit are stated in the confirmation email.
+    </p>
+  </article>
+</BaseLayout>

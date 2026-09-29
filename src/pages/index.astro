@@ -1,0 +1,269 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import QuoteWidget from "../components/QuoteWidget.astro";
+import QuoteTable from "../components/QuoteTable.astro";
+import RoomExplorer from "../components/RoomExplorer.astro";
+import TeamGrid from "../components/TeamGrid.astro";
+import { brand, images } from "../data/brand";
+import { localBusinessLd } from "../data/schema";
+import { areas } from "../data/areas";
+import { team } from "../data/team";
+import { quotePrice } from "../data/pricing";
+import { reviews } from "../data/reviews";
+import { guides } from "../data/guides";
+
+const featuredReview = reviews[0];
+
+const studio = quotePrice(1, 1, "standard", "onetime");
+const twoTwo = quotePrice(2, 2, "standard", "biweekly");
+const threeTwo = quotePrice(3, 2, "standard", "onetime");
+const prices = [
+  {
+    label: "Studio / 1 bed",
+    price: studio.price,
+    meta: "Standard · 1 bath",
+    href: "/book/?beds=1&baths=1&service=standard&freq=onetime",
+    featured: false,
+  },
+  {
+    label: "2 bed, 2 bath",
+    price: twoTwo.price,
+    meta: "Standard · bi-weekly",
+    href: "/book/?beds=2&baths=2&service=standard&freq=biweekly",
+    featured: true,
+  },
+  {
+    label: "3 bed, 2 bath",
+    price: threeTwo.price,
+    meta: "Standard",
+    href: "/book/?beds=3&baths=2&service=standard&freq=onetime",
+    featured: false,
+  },
+];
+---
+
+<BaseLayout
+  title={`House & Commercial Cleaning Vancouver | Flat Rate | ${brand.name}`}
+  description="Flat-rate home cleaning across Vancouver and the Fraser Valley, plus commercial and strata programs. See the full room-by-room scope and your price before you book."
+  canonical="/"
+  jsonLd={localBusinessLd()}
+>
+  <section class="pt-4 md:pt-8">
+    <div class="photo-inset">
+      <div class="overflow-hidden rounded-photo relative aspect-[4/5] md:aspect-[16/9]">
+        <img
+          src={images.kitchenHero}
+          alt="A lived-in Vancouver kitchen in natural daylight, after a standard clean."
+          class="absolute inset-0 h-full w-full object-cover"
+          width="1800"
+          height="1013"
+        />
+      </div>
+    </div>
+    <div class="mx-auto max-w-page px-5 md:px-8 pt-8 md:pt-12">
+      <div class="grid gap-8 md:grid-cols-2 md:gap-12 md:items-start">
+        <div>
+          <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{brand.region}</p>
+          <h1 class="display mt-3 font-semibold leading-[1.08] fs-hero max-w-[14ch] md:max-w-none">
+            See every room before you book.
+          </h1>
+        </div>
+        <div class="md:pt-8">
+          <p class="text-ink fs-lead">
+            Flat-rate cleaning with the full scope published — every check, every room, and what each
+            add-on costs.
+          </p>
+          <p class="mt-4 tabular text-slate text-[15px]">
+            2 bed, 2 bath · bi-weekly from
+            <span class="font-semibold text-ink">${twoTwo.price}</span>
+          </p>
+          <a
+            href="#quote"
+            class="mt-6 inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-10 rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
+          >
+            Get my price
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote" class="pt-10 pb-[72px] md:pt-12 md:pb-32 mx-auto max-w-page px-5 md:px-8 scroll-mt-20">
+    <h2 class="display font-semibold fs-h2">Your price</h2>
+    <p class="mt-2 text-slate max-w-[66ch]">Four taps. A flat number. No email required.</p>
+    <div class="mt-8">
+      <QuoteWidget />
+    </div>
+    <div class="sr-only">
+      <QuoteTable />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-[72px] md:pb-32">
+    <h2 class="display font-semibold fs-h2">Three businesses. Same standard.</h2>
+    <p class="mt-2 text-slate max-w-[66ch]">
+      A property manager and a homeowner should never have to read past each other's content.
+    </p>
+    <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <a href="/home-cleaning/" class="lift bg-paper border border-line rounded-card overflow-hidden">
+        <img src={images.residential} alt="Residential kitchen after a recurring clean." class="w-full aspect-[3/2] object-cover" />
+        <div class="p-5">
+          <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Residential</p>
+          <h3 class="mt-1 font-semibold fs-h3">Home</h3>
+          <p class="mt-1 text-slate text-[15px]">Flat rate by home size. Book online in minutes.</p>
+        </div>
+      </a>
+      <a href="/commercial/" class="lift bg-paper border border-line rounded-card overflow-hidden">
+        <img src={images.commercial} alt="Daylit office interior for commercial janitorial." class="w-full aspect-[3/2] object-cover" />
+        <div class="p-5">
+          <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Commercial</p>
+          <h3 class="mt-1 font-semibold fs-h3">Commercial</h3>
+          <p class="mt-1 text-slate text-[15px]">Per square foot, per month. Request a walkthrough.</p>
+        </div>
+      </a>
+      <a href="/strata/" class="lift bg-paper border border-line rounded-card overflow-hidden">
+        <img src={images.strata} alt="Residential tower exterior for strata common-area programs." class="w-full aspect-[3/2] object-cover" />
+        <div class="p-5">
+          <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Strata</p>
+          <h3 class="mt-1 font-semibold fs-h3">Strata</h3>
+          <p class="mt-1 text-slate text-[15px]">Scoped per building. AGM-ready reporting.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section class="border-y border-line bg-paper">
+    <div class="mx-auto max-w-page px-5 md:px-8 section-y">
+      <h2 class="display font-semibold fs-h2">Every room, every check</h2>
+      <p class="mt-2 text-slate max-w-[40rem] mb-8">
+        Select a room. See what is included, what is not, and what each add-on costs.
+      </p>
+      <RoomExplorer layout="compact" />
+    </div>
+  </section>
+
+  <section id="why-flat-rate" class="mx-auto max-w-page px-5 md:px-8 pt-[72px] pb-10 md:pt-24 md:pb-12">
+    <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-8">
+      <h2 class="display font-semibold fs-h2">Why flat rate</h2>
+      <p class="text-slate md:col-span-2 md:flex md:items-end md:border-l md:border-line md:pl-8 md:pb-1">
+        A published number. A published scope. The same people at the door.
+      </p>
+    </div>
+    <ol class="bg-paper border border-line rounded-card grid md:grid-cols-3 overflow-hidden">
+      <li class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-line">
+        <p class="display tabular font-semibold text-euc leading-none text-[2.75rem] md:text-[3.25rem]">01</p>
+        <h3 class="mt-6 font-semibold fs-h3">The price does not move.</h3>
+        <p class="mt-2 text-slate">Quoted before you book, unchanged after.</p>
+      </li>
+      <li class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-line">
+        <p class="display tabular font-semibold text-euc leading-none text-[2.75rem] md:text-[3.25rem]">02</p>
+        <h3 class="mt-6 font-semibold fs-h3">Nothing hidden.</h3>
+        <p class="mt-2 text-slate">Every add-on is listed with its price, inside the scope.</p>
+      </li>
+      <li class="p-6 md:p-8">
+        <p class="display tabular font-semibold text-euc leading-none text-[2.75rem] md:text-[3.25rem]">03</p>
+        <h3 class="mt-6 font-semibold fs-h3">The same team.</h3>
+        <p class="mt-2 text-slate">Not a different stranger every visit.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="border-y border-line bg-paper">
+    <div class="mx-auto max-w-page px-5 md:px-8 pt-10 pb-[72px] md:pt-12 md:pb-32">
+      <h2 class="display font-semibold fs-h2 mb-8">Meet the team</h2>
+      <TeamGrid people={team.slice(0, 4)} />
+      <p class="mt-6 text-[15px]">
+        <a href="/our-team/" class="text-euc font-medium underline underline-offset-4">Our team →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 section-y">
+    <h2 class="display font-semibold fs-h2">House cleaning prices in Vancouver</h2>
+    <p class="mt-2 text-slate max-w-[40rem] mb-8">
+      Flat rates for typical homes. The number on the card is the number you pay.
+    </p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {
+        prices.map((row) => (
+          <article
+            class:list={[
+              "flex flex-col rounded-card p-5",
+              row.featured ? "border-2 border-euc bg-euc-tint/40" : "border border-line bg-paper",
+            ]}
+          >
+            <p class="text-[11px] font-semibold tracking-[0.06em] uppercase text-euc">{row.label}</p>
+            <p class="display mt-2 font-semibold tabular text-ink fs-h2">${row.price}</p>
+            <p class="text-[14px] text-slate mt-1">{row.meta}</p>
+            <a
+              href={row.href}
+              class="mt-6 inline-flex items-center justify-center min-h-[56px] rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
+            >
+              Book this
+            </a>
+          </article>
+        ))
+      }
+    </div>
+    <p class="mt-6 text-[15px]">
+      <a href="/pricing/" class="text-euc font-medium underline underline-offset-4"
+        >Full rate table, commercial and strata →</a
+      >
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-6">
+    <div class="bg-paper border border-line rounded-card grid md:grid-cols-3 overflow-hidden">
+      <article class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-line flex flex-col">
+        <h2 class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Reviews</h2>
+        <blockquote class="mt-6">
+          <p class="display font-semibold fs-h3">“{featuredReview.quote}”</p>
+          <footer class="mt-4 text-[15px] text-slate">
+            {featuredReview.name} · {featuredReview.place}
+          </footer>
+        </blockquote>
+        <p class="mt-auto pt-8">
+          <a href="/reviews/" class="text-euc font-medium underline underline-offset-4">All reviews →</a>
+        </p>
+      </article>
+      <article class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-line flex flex-col">
+        <h2 class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Areas</h2>
+        <ul class="mt-6 divide-y divide-line border-y border-line">
+          {
+            areas.map((area) => (
+              <li>
+                <a
+                  href={`/areas/${area.slug}/`}
+                  class="flex min-h-[44px] items-center justify-between gap-3 py-2 font-medium hover:text-euc"
+                >
+                  {area.name}
+                  <span class="text-slate" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-auto pt-8">
+          <a href="/areas/" class="text-euc font-medium underline underline-offset-4">All areas →</a>
+        </p>
+      </article>
+      <article class="p-6 md:p-8 flex flex-col">
+        <h2 class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Guides</h2>
+        <ul class="mt-6 space-y-5">
+          {
+            guides.filter((guide) => guide.featured).map((guide) => (
+              <li>
+                <a href={`/guides/${guide.slug}/`} class="font-semibold leading-snug hover:text-euc">
+                  {guide.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-auto pt-8">
+          <a href="/guides/" class="text-euc font-medium underline underline-offset-4">All guides →</a>
+        </p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

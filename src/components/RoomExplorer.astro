@@ -1,0 +1,154 @@
+---
+import { rooms, roomCheckCount } from "../data/rooms";
+import type { ServiceLevel } from "../data/pricing";
+
+type Props = {
+  defaultRoom?: string;
+  layout?: "page" | "compact";
+};
+
+const { defaultRoom = "kitchen", layout = "page" } = Astro.props;
+const ns = layout;
+const levels: { id: ServiceLevel; label: string }[] = [
+  { id: "standard", label: "Standard" },
+  { id: "deep", label: "Deep" },
+  { id: "move-out", label: "Move-out" },
+];
+---
+
+<div class="room-explorer" data-layout={layout} data-ns={ns}>
+  <fieldset class="mb-6">
+    <legend class="text-[13px] font-semibold tracking-[0.06em] uppercase text-slate">Service level</legend>
+    <div class="mt-2 grid grid-cols-3 gap-2 lg:flex lg:flex-wrap">
+      {
+        levels.map((level, i) => (
+          <span>
+            <input
+              class="sr-only peer"
+              type="radio"
+              name={`level-${ns}`}
+              id={`level-${ns}-${level.id}`}
+              value={level.id}
+              checked={i === 0}
+            />
+            <label
+              for={`level-${ns}-${level.id}`}
+              class="min-h-[52px] px-3 rounded-full border border-line bg-paper font-medium text-[15px] cursor-pointer inline-flex items-center justify-center w-full peer-checked:border-2 peer-checked:border-euc peer-checked:bg-euc-tint peer-checked:font-semibold"
+            >
+              {level.label}
+            </label>
+          </span>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="grid gap-8 min-w-0 md:grid-cols-[minmax(0,1fr)_minmax(240px,380px)] md:items-start">
+    <div role="radiogroup" aria-label="Select a room" class="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-3 min-w-0">
+      {
+        rooms.map((room) => (
+          <div>
+            <input
+              class="sr-only peer"
+              type="radio"
+              name={`room-${ns}`}
+              id={`room-${ns}-${room.id}`}
+              value={room.id}
+              checked={room.id === defaultRoom}
+            />
+            <label
+              for={`room-${ns}-${room.id}`}
+              class="aspect-square rounded-card overflow-hidden border border-line bg-paper text-left relative block cursor-pointer peer-checked:border-2 peer-checked:border-euc peer-checked:bg-euc-tint"
+            >
+              <img src={room.image} alt="" class="absolute inset-0 w-full h-full object-cover opacity-50" />
+              <span class="relative z-10 p-3 xs:p-4 flex flex-col justify-end h-full bg-chalk/50">
+                <span class="font-semibold">{room.name}</span>
+                <span class="tabular text-[13px] text-slate">{roomCheckCount(room, "standard")} checks</span>
+              </span>
+            </label>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="md:sticky md:top-24 space-y-8 min-w-0" data-room-scope>
+      {
+        rooms.map((room) =>
+          levels.map((level) => (
+            <article
+              class:list={[
+                "room-panel bg-paper border border-line rounded-card p-5 md:p-7",
+                `panel-${room.id}-${level.id}`,
+              ]}
+              hidden={!(room.id === defaultRoom && level.id === "standard")}
+            >
+              <div class="flex items-baseline justify-between gap-4">
+                <h3 class="font-semibold fs-h3">{room.name}</h3>
+                <p class="tabular text-[13px] font-semibold tracking-[0.06em] uppercase text-euc">
+                  {roomCheckCount(room, level.id)} checks
+                </p>
+              </div>
+              <p class="mt-1 text-[15px] text-slate">
+                {level.label} visit · approx. {room.minutes} min
+              </p>
+              <ul class="mt-5 space-y-0 border-t border-line pt-2">
+                {room.included[level.id].map((item) => (
+                  <li class="check-item flex gap-3 min-h-12 items-center">
+                    <span class="text-euc" aria-hidden="true">
+                      ✓
+                    </span>
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+              {room.addons[level.id].length > 0 && (
+                <>
+                  <p class="mt-4 text-[11px] font-semibold tracking-[0.08em] uppercase text-slate">
+                    Not included — available as add-ons
+                  </p>
+                  <ul class="mt-1">
+                    {room.addons[level.id].map((item) => (
+                      <li class="check-item flex justify-between gap-3 min-h-12 items-center">
+                        <span class="flex gap-3">
+                          <span class="text-slate" aria-hidden="true">
+                            ○
+                          </span>
+                          {item.label}
+                        </span>
+                        <span class="tabular text-slate">+${item.addon}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </article>
+          )),
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  function bindExplorer(root: HTMLElement) {
+    const ns = root.dataset.ns;
+    function syncPanels(scroll = false) {
+      const room = (root.querySelector(`input[name="room-${ns}"]:checked`) as HTMLInputElement | null)
+        ?.value;
+      const level = (root.querySelector(`input[name="level-${ns}"]:checked`) as HTMLInputElement | null)
+        ?.value;
+      root.querySelectorAll(".room-panel").forEach((panel) => {
+        const match = panel.classList.contains(`panel-${room}-${level}`);
+        (panel as HTMLElement).hidden = !match;
+      });
+      if (scroll && window.matchMedia("(max-width: 767px)").matches) {
+        root.querySelector("[data-room-scope]")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    root.querySelectorAll(`input[name="room-${ns}"], input[name="level-${ns}"]`).forEach((input) => {
+      input.addEventListener("change", () => syncPanels(true));
+    });
+    syncPanels(false);
+  }
+  document.querySelectorAll<HTMLElement>(".room-explorer").forEach(bindExplorer);
+</script>

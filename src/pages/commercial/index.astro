@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import ScopeBuilder from "../../components/ScopeBuilder";
+import InspectionReport from "../../components/InspectionReport.astro";
+import FaqList from "../../components/FaqList.astro";
+import { brand, images } from "../../data/brand";
+import { commercialServices } from "../../data/services";
+import { faqs } from "../../data/reviews";
+import { commercialRanges } from "../../data/pricing";
+import { serviceLd } from "../../data/schema";
+---
+
+<BaseLayout
+  title={`Commercial Cleaning Vancouver | Walkthrough | ${brand.name}`}
+  description="Office, retail and documented green-cleaning programmes in Vancouver. Indicative per-square-foot ranges, confirmed at walkthrough."
+  canonical="/commercial/"
+  cta="walkthrough"
+  jsonLd={serviceLd("Commercial cleaning", "/commercial/", "Commercial janitorial with audit-ready documentation.")}
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Commercial" }]} />
+    <p class="mt-6 text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Commercial</p>
+    <h1 class="display mt-3 font-semibold fs-hero max-w-[18ch]">Scoped like a facilities plan.</h1>
+    <p class="mt-3 max-w-[50ch] text-slate fs-lead">
+      Per square foot, per month. A walkthrough confirms the number. Documentation from the first contract.
+    </p>
+    <div class="mt-8 overflow-hidden rounded-photo">
+      <img src={images.office} alt="Daylit office ready for a janitorial programme." class="w-full aspect-[4/5] md:aspect-[16/9] object-cover" />
+    </div>
+  </article>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16" id="scope">
+    <h2 class="display font-semibold fs-h2 mb-6">Build the scope</h2>
+    <ScopeBuilder client:load />
+    <div class="mt-8">
+      <table class="w-full bg-paper border border-line rounded-card tabular">
+        <caption class="sr-only">Indicative commercial monthly ranges</caption>
+        <thead>
+          <tr class="text-left text-[13px] uppercase tracking-[0.06em] text-slate">
+            <th class="px-4 py-3">Frequency, small office</th>
+            <th class="px-4 py-3">Indicative monthly</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            commercialRanges.map((row) => (
+              <tr class="border-t border-line">
+                <td class="px-4 py-3">{row.frequency}</td>
+                <td class="px-4 py-3">{row.monthly}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <p class="mt-3 text-slate">Per square foot: $0.10 – $0.30, driven by complexity and traffic.</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {
+      commercialServices.map((s) => (
+        <a href={`/commercial/${s.slug}/`} class="bg-paper border border-line rounded-card p-5 hover:border-euc">
+          <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{s.eyebrow}</p>
+          <h2 class="mt-2 font-semibold fs-h3">{s.h1}</h2>
+          <p class="mt-2 text-slate">{s.lead}</p>
+        </a>
+      ))
+    }
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2 mb-2">Mobilisation</h2>
+    <p class="text-slate max-w-[66ch] mb-6">
+      Site assessment within 48 hours. Scope and quote within 5 business days. Crews mobilised in 7–10
+      days for standard contracts, 30–60 days for larger ones.
+    </p>
+    <h2 class="display font-semibold fs-h2 mb-6">What you receive</h2>
+    <InspectionReport />
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <FaqList items={[...faqs.commercial]} />
+  </section>
+</BaseLayout>

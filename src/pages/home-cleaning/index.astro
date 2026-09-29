@@ -1,0 +1,144 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import QuoteWidget from "../../components/QuoteWidget.astro";
+import RoomExplorer from "../../components/RoomExplorer.astro";
+import TeamGrid from "../../components/TeamGrid.astro";
+import QuoteTable from "../../components/QuoteTable.astro";
+import FaqList from "../../components/FaqList.astro";
+import { brand, images } from "../../data/brand";
+import { residentialServices } from "../../data/services";
+import { comparison, quotePrice } from "../../data/pricing";
+import { team } from "../../data/team";
+import { faqs } from "../../data/reviews";
+import { serviceLd } from "../../data/schema";
+
+const twoTwo = quotePrice(2, 2, "standard", "biweekly");
+---
+
+<BaseLayout
+  title={`House Cleaning Vancouver | Flat Rate | ${brand.name}`}
+  description="Flat-rate house cleaning in Vancouver and the Fraser Valley. Recurring, deep and move-out visits with a published room-by-room scope — see the price before you book."
+  canonical="/home-cleaning/"
+  jsonLd={serviceLd(
+    "House cleaning",
+    "/home-cleaning/",
+    "Flat-rate house cleaning in Vancouver and the Fraser Valley with a published room-by-room scope.",
+  )}
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Home cleaning" }]} />
+    <div class="mt-6 grid gap-8 md:grid-cols-2 md:gap-12 md:items-start">
+      <div>
+        <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Residential</p>
+        <h1 class="display mt-3 font-semibold fs-hero max-w-[14ch] md:max-w-none">
+          See every room before you book.
+        </h1>
+      </div>
+      <div class="md:pt-8">
+        <p class="text-ink fs-lead">
+          Flat-rate house cleaning across Vancouver and the Fraser Valley. A published room-by-room
+          scope, and the same people at the door.
+        </p>
+        <p class="mt-4 tabular text-slate text-[15px]">
+          2 bed, 2 bath · bi-weekly from
+          <span class="font-semibold text-ink">${twoTwo.price}</span>
+        </p>
+        <a
+          href="#quote"
+          class="mt-6 inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-10 rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
+        >
+          Get my price
+        </a>
+      </div>
+    </div>
+    <div class="mt-8 overflow-hidden rounded-photo">
+      <img src={images.residential} alt="A lived-in kitchen after a standard recurring clean." class="w-full aspect-[4/5] md:aspect-[16/9] object-cover" />
+    </div>
+  </article>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-12" id="quote">
+    <h2 class="display font-semibold fs-h2">Four questions. One number.</h2>
+    <p class="mt-2 text-slate">No email. No phone. The quoted price is the price.</p>
+    <div class="mt-8">
+      <QuoteWidget />
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2">Every room, every check</h2>
+    <p class="mt-2 text-slate max-w-[40rem] mb-8">
+      Select a room. See what is included, what is not, and what each add-on costs.
+    </p>
+    <RoomExplorer />
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2">Services</h2>
+    <div class="mt-6 grid md:grid-cols-2 gap-4">
+      {
+        residentialServices.map((s) => (
+          <a href={`/home-cleaning/${s.slug}/`} class="lift bg-paper border border-line rounded-card p-5">
+            <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{s.eyebrow}</p>
+            <h3 class="mt-2 font-semibold fs-h3">{s.h1}</h3>
+            <p class="mt-2 text-slate">{s.lead}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2 mb-6">Standard vs deep vs move-out</h2>
+    <div class="md:hidden space-y-3">
+      {
+        comparison.rows.map((row) => (
+          <article class="bg-paper border border-line rounded-card p-4">
+            <p class="font-semibold">{row[0]}</p>
+            <dl class="mt-3 grid grid-cols-3 gap-2 text-center tabular">
+              {comparison.headers.slice(1).map((header, i) => (
+                <div>
+                  <dt class="text-[11px] font-semibold tracking-[0.06em] uppercase text-slate">{header}</dt>
+                  <dd class="mt-1 text-[15px]">{row[i + 1]}</dd>
+                </div>
+              ))}
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+    <table class="hidden md:table w-full bg-paper border border-line rounded-card tabular">
+      <thead>
+        <tr class="text-left text-[13px] uppercase tracking-[0.06em] text-slate">
+          {comparison.headers.map((h) => <th class="px-4 py-3">{h}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {
+          comparison.rows.map((row) => (
+            <tr class="border-t border-line">
+              {row.map((cell) => (
+                <td class="px-4 py-3">{cell}</td>
+              ))}
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2 mb-6">The same team</h2>
+    <TeamGrid people={team.slice(0, 4)} />
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2 mb-4">One-time rates</h2>
+    <QuoteTable />
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2 mb-6">Questions</h2>
+    <FaqList items={[...faqs.residential]} />
+  </section>
+</BaseLayout>

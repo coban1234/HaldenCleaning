@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import ScopeBuilder from "../../components/ScopeBuilder";
+import InspectionReport from "../../components/InspectionReport.astro";
+import FaqList from "../../components/FaqList.astro";
+import { brand, images } from "../../data/brand";
+import { strataServices } from "../../data/services";
+import { faqs } from "../../data/reviews";
+import { serviceLd } from "../../data/schema";
+---
+
+<BaseLayout
+  title={`Strata Cleaning Vancouver | AGM-Ready | ${brand.name}`}
+  description="Strata common-area and amenity cleaning in Metro Vancouver. Scoped per building, photographed and scored every visit."
+  canonical="/strata/"
+  cta="walkthrough"
+  jsonLd={serviceLd("Strata cleaning", "/strata/", "Strata common-area programmes with AGM-ready reporting.")}
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Strata" }]} />
+    <p class="mt-6 text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Strata</p>
+    <h1 class="display mt-3 font-semibold fs-hero max-w-[20ch]">A document, not an opinion.</h1>
+    <p class="mt-3 max-w-[52ch] text-slate fs-lead">
+      Every visit is logged, photographed and scored. When someone asks at the AGM what the cleaning
+      contract is delivering, the answer is a document.
+    </p>
+    <div class="mt-8 overflow-hidden rounded-photo">
+      <img src={images.strata} alt="Residential tower common-area exterior." class="w-full aspect-[4/5] md:aspect-[16/9] object-cover" />
+    </div>
+  </article>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16" id="scope">
+    <h2 class="display font-semibold fs-h2 mb-6">Amenity checklist</h2>
+    <ScopeBuilder client:load />
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16 grid md:grid-cols-2 gap-4">
+    {
+      strataServices.map((s) => (
+        <a href={`/strata/${s.slug}/`} class="bg-paper border border-line rounded-card p-5 hover:border-euc">
+          <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{s.eyebrow}</p>
+          <h2 class="mt-2 font-semibold fs-h3">{s.h1}</h2>
+          <p class="mt-2 text-slate">{s.lead}</p>
+        </a>
+      ))
+    }
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2 mb-6">AGM-ready reporting</h2>
+    <InspectionReport />
+  </section>
+
+  <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <FaqList items={[...faqs.strata]} />
+  </section>
+</BaseLayout>

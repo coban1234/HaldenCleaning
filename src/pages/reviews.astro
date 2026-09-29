@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { brand } from "../data/brand";
+import { reviews } from "../data/reviews";
+---
+
+<BaseLayout
+  title={`Reviews | ${brand.name} Cleaning Vancouver`}
+  description="What clients actually say — specificity, not adjectives. House, commercial and strata."
+  canonical="/reviews/"
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Reviews" }]} />
+    <h1 class="display mt-6 font-semibold fs-hero">Reviews</h1>
+    <p class="mt-3 max-w-[50ch] text-slate fs-lead">
+      Requested after every third recurring visit. For commercial and strata, at contract renewal.
+    </p>
+    <div class="mt-10 grid md:grid-cols-2 gap-5">
+      {
+        reviews.map((item) => (
+          <blockquote class="bg-paper border border-line rounded-card p-6">
+            <p class="fs-lead">“{item.quote}”</p>
+            <footer class="mt-4 text-slate text-[15px]">
+              {item.name} · {item.place}
+            </footer>
+          </blockquote>
+        ))
+      }
+    </div>
+  </article>
+</BaseLayout>

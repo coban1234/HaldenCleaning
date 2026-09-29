@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { guides, relatedGuides } from "../../data/guides";
+import { brand } from "../../data/brand";
+
+export function getStaticPaths() {
+  return guides.map((g) => ({ params: { slug: g.slug } }));
+}
+
+const guide = guides.find((g) => g.slug === Astro.params.slug);
+if (!guide) throw new Error("Missing guide");
+const related = relatedGuides(guide.slug);
+---
+
+<BaseLayout
+  title={`${guide.title} | ${brand.name}`}
+  description={guide.description}
+  canonical={`/guides/${guide.slug}/`}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.title,
+    description: guide.description,
+  }}
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs
+      items={[
+        { href: "/", label: "Home" },
+        { href: "/guides/", label: "Guides" },
+        { label: guide.title },
+      ]}
+    />
+    <p class="mt-6 text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Guide</p>
+    <h1 class="display mt-3 font-semibold fs-hero max-w-[22ch]">{guide.h1}</h1>
+    <p class="mt-4 max-w-[46rem] text-slate fs-lead">{guide.description}</p>
+    <div class="mt-10 max-w-[46rem] space-y-5">
+      {guide.body.map((p) => <p>{p}</p>)}
+    </div>
+  </article>
+
+  <nav class="mx-auto max-w-page px-5 md:px-8 pb-12 md:pb-16" aria-label="More guides">
+    <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc mb-4">More guides</p>
+    <ul class="grid md:grid-cols-3 gap-4">
+      {
+        related.map((item) => (
+          <li>
+            <a
+              href={`/guides/${item.slug}/`}
+              class="lift flex h-full flex-col bg-paper border border-line rounded-card p-5"
+            >
+              <h2 class="font-semibold fs-h3">{item.title}</h2>
+              <p class="mt-2 text-slate text-[15px]">{item.description}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</BaseLayout>

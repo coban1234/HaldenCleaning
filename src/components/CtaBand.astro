@@ -1,0 +1,69 @@
+---
+type Props = { cta?: "book" | "walkthrough" };
+const { cta = "book" } = Astro.props;
+
+import { quotePrice } from "../data/pricing";
+
+const twoTwo = quotePrice(2, 2, "standard", "biweekly");
+const isBook = cta === "book";
+---
+
+<section class="bg-brass-tn">
+  <div class="mx-auto max-w-page px-5 md:px-8 pt-8 pb-10 md:pt-10 md:pb-12">
+    <div class="grid gap-6 md:grid-cols-2 md:gap-0 md:items-stretch">
+      <h2 class="display font-semibold fs-h2 max-w-[14ch] md:pr-12 md:self-center">
+        {isBook ? "See the price before you book." : "Build the scope. Then walk the building."}
+      </h2>
+      <div class="md:flex md:flex-col md:justify-center md:border-l md:border-brass/35 md:pl-12">
+        {
+          isBook ? (
+            <p class="fs-lead">
+              Answer four questions and you will have a flat rate in under a minute. No email
+              required.
+            </p>
+          ) : (
+            <p class="fs-lead">
+              An indicative range from the amenity list — confirmed at walkthrough. No online
+              booking for a building contract.
+            </p>
+          )
+        }
+        {
+          isBook && (
+            <p class="mt-4 tabular text-slate text-[15px]">
+              2 bed, 2 bath · bi-weekly from
+              <span class="font-semibold text-ink">${twoTwo.price}</span>
+            </p>
+          )
+        }
+        <div class="mt-6 flex flex-col sm:flex-row flex-wrap gap-3">
+          {
+            isBook ? (
+              <>
+                <a
+                  href="/#quote"
+                  class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h"
+                >
+                  Get my price
+                </a>
+                <a
+                  href="/home-cleaning/whats-included/"
+                  class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-8 rounded-full border-[1.5px] border-ink font-semibold"
+                >
+                  See what's included
+                </a>
+              </>
+            ) : (
+              <a
+                href="/contact/"
+                class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h"
+              >
+                Request a walkthrough
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

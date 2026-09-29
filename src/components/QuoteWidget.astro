@@ -1,0 +1,160 @@
+---
+import {
+  frequencyLabels,
+  quotePrice,
+  serviceLabels,
+  type Frequency,
+  type ServiceLevel,
+} from "../data/pricing";
+
+const defaultQuote = quotePrice(2, 2, "standard", "biweekly");
+const pill =
+  "option-pill w-full px-1 md:w-auto md:min-w-12 md:px-4";
+---
+
+<div class="quote-widget grid gap-6 items-start min-w-0 md:grid-cols-[minmax(0,1fr)_minmax(220px,300px)]" data-quote>
+  <div class="bg-paper border border-line rounded-card p-5 md:p-6 space-y-5 min-w-0">
+    <fieldset>
+      <legend class="text-[13px] font-semibold tracking-[0.06em] uppercase text-slate">Bedrooms</legend>
+      <div class="mt-2 grid grid-cols-5 gap-2 md:flex md:flex-wrap" data-group="beds">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button type="button" data-value={n} aria-pressed={n === 2 ? "true" : "false"} class={pill}>
+            {n === 5 ? "5+" : n}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend class="text-[13px] font-semibold tracking-[0.06em] uppercase text-slate">Bathrooms</legend>
+      <div class="mt-2 grid grid-cols-4 gap-2 md:flex md:flex-wrap" data-group="baths">
+        {[1, 2, 3, 4].map((n) => (
+          <button type="button" data-value={n} aria-pressed={n === 2 ? "true" : "false"} class={pill}>
+            {n === 4 ? "4+" : n}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend class="text-[13px] font-semibold tracking-[0.06em] uppercase text-slate">Service</legend>
+      <div class="mt-2 grid grid-cols-3 gap-2 md:flex md:flex-wrap" data-group="service">
+        {(Object.keys(serviceLabels) as ServiceLevel[]).map((s) => (
+          <button
+            type="button"
+            data-value={s}
+            aria-pressed={s === "standard" ? "true" : "false"}
+            class={pill}
+          >
+            {serviceLabels[s]}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend class="text-[13px] font-semibold tracking-[0.06em] uppercase text-slate">Frequency</legend>
+      <div class="mt-2 grid grid-cols-2 gap-2 md:flex md:flex-wrap" data-group="freq">
+        {(Object.keys(frequencyLabels) as Frequency[]).map((f) => (
+          <button
+            type="button"
+            data-value={f}
+            aria-pressed={f === "biweekly" ? "true" : "false"}
+            class={pill}
+          >
+            {frequencyLabels[f]}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  </div>
+  <aside class="bg-paper border border-line rounded-card p-5 md:p-6 flex flex-col min-w-0 md:sticky md:top-24">
+    <p class="text-[13px] font-semibold tracking-[0.06em] uppercase text-slate">Your price</p>
+    <p class="display mt-2 font-semibold tabular text-ink min-w-[5ch] fs-h2" data-price>
+      ${defaultQuote.price}
+    </p>
+    <p class="mt-3 text-slate tabular text-[15px]" data-duration>
+      {defaultQuote.duration}
+    </p>
+    <p class="mt-3 text-euc font-medium" data-promise>Flat rate. This is the price.</p>
+    <p class="mt-1 text-[14px] text-slate" data-save>
+      Save ${defaultQuote.savings} against one-time.
+    </p>
+    <div class="mt-6 space-y-2">
+      <a
+        href="/book/?beds=2&baths=2&service=standard&freq=biweekly"
+        data-book
+        class="flex items-center justify-center min-h-[56px] rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
+      >
+        Book this
+      </a>
+      <a
+        href="/home-cleaning/whats-included/"
+        class="flex items-center justify-center min-h-[56px] rounded-full border-[1.5px] border-ink text-ink text-[15px] font-semibold"
+      >
+        See what's included →
+      </a>
+    </div>
+  </aside>
+</div>
+
+<script>
+  import { quotePrice } from "../data/pricing";
+
+  function selected(root: Element, group: string) {
+    return (root.querySelector(`[data-group="${group}"] [aria-pressed="true"]`) as HTMLElement)
+      ?.dataset.value;
+  }
+
+  function publish(detail: { price: string | null; href: string }) {
+    window.dispatchEvent(new CustomEvent("quote:update", { detail }));
+  }
+
+  function bind(root: HTMLElement) {
+    root.querySelectorAll("[data-group]").forEach((group) => {
+      group.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          group.querySelectorAll("button").forEach((other) => other.setAttribute("aria-pressed", "false"));
+          btn.setAttribute("aria-pressed", "true");
+          update(root);
+        });
+      });
+    });
+    update(root);
+  }
+
+  function update(root: HTMLElement) {
+    const beds = Number(selected(root, "beds")) as 1 | 2 | 3 | 4 | 5;
+    const baths = Number(selected(root, "baths")) as 1 | 2 | 3 | 4;
+    const service = selected(root, "service") as "standard" | "deep" | "move-out";
+    const freq = selected(root, "freq") as "weekly" | "biweekly" | "monthly" | "onetime";
+    const result = quotePrice(beds, baths, service, freq);
+    const priceEl = root.querySelector("[data-price]")!;
+    const durationEl = root.querySelector("[data-duration]")!;
+    const promiseEl = root.querySelector("[data-promise]")!;
+    const saveEl = root.querySelector("[data-save]")!;
+    const book = root.querySelector("[data-book]") as HTMLAnchorElement;
+    priceEl.classList.remove("price-swap");
+    void (priceEl as HTMLElement).offsetWidth;
+    priceEl.classList.add("price-swap");
+    if (result.price == null) {
+      priceEl.textContent = "Walkthrough";
+      durationEl.textContent = result.duration;
+      promiseEl.textContent = "5 bed+ is quoted after a walkthrough.";
+      saveEl.textContent = "";
+      book.href = "/contact/";
+      book.textContent = "Request a walkthrough";
+      publish({ price: null, href: "/contact/" });
+    } else {
+      priceEl.textContent = `$${result.price}`;
+      durationEl.textContent = result.duration;
+      promiseEl.textContent = "Flat rate. This is the price.";
+      saveEl.textContent = result.savings > 0 ? `Save $${result.savings} against one-time.` : "";
+      book.href = `/book/?beds=${beds}&baths=${baths}&service=${service}&freq=${freq}`;
+      book.textContent = "Book this";
+      publish({
+        price: `$${result.price}`,
+        href: `/book/?beds=${beds}&baths=${baths}&service=${service}&freq=${freq}`,
+      });
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-quote]").forEach(bind);
+</script>

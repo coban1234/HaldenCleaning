@@ -1,0 +1,38 @@
+---
+import { vetting, type TeamMember } from "../data/team";
+
+type Props = { people: TeamMember[]; showFilter?: boolean };
+const { people } = Astro.props;
+---
+
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+  {
+    people.map((person) => (
+      <article class="lift bg-paper border border-line rounded-card overflow-hidden">
+        <img
+          src={person.photo}
+          alt={`Portrait of ${person.name}.`}
+          class="w-full aspect-square object-cover"
+          width="400"
+          height="400"
+        />
+        <div class="p-4">
+          <h3 class="font-semibold">{person.name}</h3>
+          <p class="tabular text-[15px] text-slate">
+            {person.years} years with us · {person.languages.join(", ")}
+          </p>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {vetting.map((badge) => (
+              <span class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc bg-euc-tint rounded-full px-2.5 py-1">
+                {badge}
+              </span>
+            ))}
+            <span class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc bg-euc-tint rounded-full px-2.5 py-1">
+              {person.years} years with us
+            </span>
+          </div>
+        </div>
+      </article>
+    ))
+  }
+</div>

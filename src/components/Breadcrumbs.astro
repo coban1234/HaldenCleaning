@@ -1,0 +1,29 @@
+---
+type Crumb = { href?: string; label: string };
+type Props = { items: Crumb[] };
+const { items } = Astro.props;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.label,
+    item: item.href ? `https://thresholdcleaning.ca${item.href}` : undefined,
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class="text-[13px] text-slate">
+  <ol class="flex flex-wrap gap-2">
+    {
+      items.map((item, i) => (
+        <li class="flex items-center gap-2">
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {item.href ? <a href={item.href} class="hover:text-euc">{item.label}</a> : <span class="text-ink">{item.label}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

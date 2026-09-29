@@ -1,0 +1,47 @@
+---
+const areas = [
+  { name: "Lobby", score: 96, note: "Glass and desk sanitised. Grout at entry needs a quarterly descale." },
+  { name: "Corridors — floors 2–8", score: 92, note: "Vacuum edges complete. One scuff at 4th-floor west, photographed." },
+  { name: "Elevator cabs", score: 88, note: "Fingerprints cleared. Track grit remaining at cab 2 — extra pass booked." },
+  { name: "Gym", score: 94, note: "Equipment wiped. Floor mopped. Towel bin replaced." },
+];
+---
+
+<article class="bg-paper border border-line rounded-card overflow-hidden">
+  <header class="px-6 py-5 border-b border-line flex flex-wrap justify-between gap-3">
+    <div>
+      <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Sample inspection</p>
+      <h3 class="font-semibold fs-h3 mt-1">The Charles — common areas</h3>
+      <p class="text-slate text-[15px]">12 March 2026 · scored by area · photographed</p>
+    </div>
+    <p class="tabular display font-semibold text-3xl text-euc">93</p>
+  </header>
+  <ul class="divide-y divide-line">
+    {
+      areas.map((row) => (
+        <li class="px-6 py-4 grid md:grid-cols-[160px_64px_1fr] gap-3 items-start">
+          <p class="font-semibold">{row.name}</p>
+          <p class="tabular text-euc font-semibold">{row.score}</p>
+          <p class="text-slate text-[15px]">{row.note}</p>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="px-6 py-5 bg-euc-tint/40 grid md:grid-cols-2 gap-6">
+    <div>
+      <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Green cleaning plan</p>
+      <p class="mt-2 text-[15px]">
+        Neutral pH floor cleaner, hydrogen-peroxide bath disinfectant, microfibre only. No quaternary
+        fogging. Plan on file for BOMA Best / LEED v4.1.
+      </p>
+    </div>
+    <div>
+      <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">SDS index</p>
+      <ul class="mt-2 text-[15px] space-y-1">
+        <li>Floor cleaner — SDS-04</li>
+        <li>Washroom disinfectant — SDS-11</li>
+        <li>Glass — SDS-02</li>
+      </ul>
+    </div>
+  </div>
+</article>

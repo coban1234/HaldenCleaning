@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { guideGroups, guidesInGroup } from "../../data/guides";
+import { brand } from "../../data/brand";
+---
+
+<BaseLayout
+  title={`Guides | House Cleaning Vancouver | ${brand.name}`}
+  description="What's included, flat rate versus hourly, how often to clean, and what house, commercial and strata cleaning cost in Vancouver."
+  canonical="/guides/"
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Guides" }]} />
+    <div class="mt-6 grid gap-8 md:grid-cols-2 md:gap-12 md:items-start mb-12 md:mb-16">
+      <div>
+        <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Published answers</p>
+        <h1 class="display mt-3 font-semibold fs-hero">Guides</h1>
+      </div>
+      <div class="md:pt-8">
+        <p class="text-ink fs-lead">
+          The room list, the number, and the contract — written down, so you are not comparing adjectives.
+        </p>
+      </div>
+    </div>
+
+    {
+      guideGroups.map((group) => {
+        const items = guidesInGroup(group.id);
+        return (
+          <section class="mb-12 md:mb-16">
+            <div class="grid gap-3 md:grid-cols-3 md:gap-0 md:items-stretch mb-6">
+              <h2 class="display font-semibold fs-h2">{group.label}</h2>
+              <p class="text-slate md:col-span-2 md:flex md:items-center md:border-l md:border-line md:pl-8">
+                {group.dek}
+              </p>
+            </div>
+            <ul
+              class:list={[
+                "grid gap-4 md:grid-cols-2",
+                items.length !== 2 && items.length !== 4 && "lg:grid-cols-3",
+              ]}
+            >
+              {items.map((guide) => (
+                <li>
+                  <a
+                    href={`/guides/${guide.slug}/`}
+                    class="lift flex h-full flex-col bg-paper border border-line rounded-card p-6"
+                  >
+                    <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">
+                      {group.label}
+                    </p>
+                    <h3 class="mt-3 font-semibold fs-h3">{guide.title}</h3>
+                    <p class="mt-2 text-slate text-[15px]">{guide.description}</p>
+                    <span class="mt-auto pt-6 text-euc font-medium">Read →</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })
+    }
+  </article>
+</BaseLayout>

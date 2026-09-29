@@ -1,0 +1,76 @@
+---
+import { brand, nav } from "../data/brand";
+import Logo from "./Logo.astro";
+
+type Props = {
+  cta?: "book" | "walkthrough";
+};
+
+const { cta = "book" } = Astro.props;
+const ctaHref = cta === "book" ? "/book/" : "/contact/";
+const ctaDesktop = cta === "book" ? "Book online" : "Request a walkthrough";
+const ctaMobile = cta === "book" ? "Book" : "Walkthrough";
+---
+
+<header class="sticky top-0 z-50 bg-chalk h-16 md:h-[76px] border-b border-line">
+  <div class="mx-auto max-w-page h-full px-4 xs:px-5 md:px-8 flex items-center justify-between gap-3">
+    <Logo class="flex items-center gap-2.5 shrink-0 text-euc min-w-0" />
+    <nav class="hidden lg:flex items-center gap-4 xl:gap-7 text-[14px] xl:text-[15px] font-medium text-ink min-w-0" aria-label="Primary">
+      {
+        nav.map((item) => (
+          <a href={item.href} class="hover:text-euc">
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="flex items-center gap-2 shrink-0">
+      <a
+        href={ctaHref}
+        class="inline-flex items-center justify-center min-h-10 px-3 xs:px-4 rounded-full bg-brass text-chalk text-[14px] font-semibold hover:bg-brass-h lg:min-h-12 lg:px-5 xl:min-h-[56px] xl:px-10 xl:text-[15px]"
+      >
+        <span class="lg:hidden">{ctaMobile}</span>
+        <span class="hidden lg:inline xl:hidden">{cta === "book" ? "Book online" : "Walkthrough"}</span>
+        <span class="hidden xl:inline">{ctaDesktop}</span>
+      </a>
+      <details class="lg:hidden group">
+        <summary
+          class="relative z-50 list-none w-12 h-12 flex items-center justify-center cursor-pointer [&::-webkit-details-marker]:hidden"
+          aria-label="Menu"
+        >
+          <svg class="group-open:hidden" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="#1E2420" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+          <svg class="hidden group-open:block" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" stroke="#1E2420" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+        </summary>
+        <div class="nav-sheet fixed inset-x-0 top-16 md:top-[76px] bottom-0 z-40 bg-chalk overflow-y-auto px-5 flex flex-col">
+          <nav class="flex flex-col" aria-label="Mobile">
+            {
+              nav.map((item) => (
+                <a href={item.href} class="py-4 border-b border-line text-[17px] font-medium">
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+          <div class="mt-auto pt-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] space-y-3">
+            <a
+              href={ctaHref}
+              class="flex items-center justify-center min-h-[56px] rounded-full bg-brass text-chalk text-[15px] font-semibold"
+            >
+              {ctaDesktop}
+            </a>
+            <a
+              href={brand.phoneHref}
+              class="flex items-center justify-center min-h-[56px] rounded-full border-[1.5px] border-ink text-[15px] font-semibold"
+            >
+              Call {brand.phone}
+            </a>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumbs from "../components/Breadcrumbs.astro";
+import { brand } from "../data/brand";
+---
+
+<BaseLayout
+  title={`Contact | ${brand.name}`}
+  description="Request a walkthrough for commercial or strata, or book residential online. Vancouver and the Fraser Valley."
+  canonical="/contact/"
+  cta="walkthrough"
+>
+  <article class="mx-auto max-w-page px-5 md:px-8 py-8">
+    <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Contact" }]} />
+    <h1 class="display mt-6 font-semibold fs-hero">Request a walkthrough</h1>
+    <p class="mt-3 max-w-[48ch] text-slate fs-lead">
+      Residential books online and gets an email confirmation. Commercial and strata start with a
+      walkthrough — a manager will confirm by phone or email.
+    </p>
+    <p class="mt-4">
+      <a class="text-euc underline" href={brand.phoneHref}>{brand.phone}</a>
+      ·
+      <a class="text-euc underline" href={`mailto:${brand.email}`}>{brand.email}</a>
+    </p>
+    <form class="mt-10 max-w-xl bg-paper border border-line rounded-card p-6 space-y-4" method="post" action={`mailto:${brand.email}`}>
+      <label class="block">
+        <span class="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">Name</span>
+        <input class="mt-1 w-full min-h-12 border border-line rounded-card px-3" name="name" required />
+      </label>
+      <label class="block">
+        <span class="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">Organisation</span>
+        <input class="mt-1 w-full min-h-12 border border-line rounded-card px-3" name="org" />
+      </label>
+      <label class="block">
+        <span class="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">Email or phone</span>
+        <input class="mt-1 w-full min-h-12 border border-line rounded-card px-3" name="contact" required />
+      </label>
+      <label class="block">
+        <span class="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">Address</span>
+        <input class="mt-1 w-full min-h-12 border border-line rounded-card px-3" name="address" />
+      </label>
+      <label class="block">
+        <span class="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">Notes</span>
+        <textarea class="mt-1 w-full min-h-32 border border-line rounded-card px-3 py-2" name="notes"></textarea>
+      </label>
+      <button class="min-h-[56px] px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h" type="submit">
+        Request a walkthrough
+      </button>
+    </form>
+    <p class="mt-8 text-slate">
+      House cleaning? <a href="/book/" class="text-euc underline">Book online →</a>
+    </p>
+  </article>
+</BaseLayout>
