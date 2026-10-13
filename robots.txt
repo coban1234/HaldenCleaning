@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thresholdcleaning.ca/sitemap-index.xml

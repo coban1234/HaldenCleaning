@@ -1,0 +1,1 @@
+function r(t){return t.startsWith("http://")||t.startsWith("https://")||t.startsWith("mailto:")||t.startsWith("tel:")||t.startsWith("#")?t:`${"/".endsWith("/")?"/":"//"}${t.replace(/^\//,"")}`}export{r as h};
