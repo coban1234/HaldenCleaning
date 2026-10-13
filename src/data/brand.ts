@@ -11,14 +11,6 @@ export const brand = {
   hours: "Hours by appointment",
 } as const;
 
-export const doorwayLogo = {
-  viewBox: "0 0 24 24",
-  paths: [
-    'M5 21V5.5A1.5 1.5 0 0 1 6.5 4h11A1.5 1.5 0 0 1 19 5.5V21',
-    'M9 21V11h6v10',
-  ],
-} as const;
-
 export const nav = [
   { href: "/home-cleaning/", label: "Home cleaning" },
   { href: "/commercial/", label: "Commercial" },

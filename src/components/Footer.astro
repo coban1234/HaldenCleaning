@@ -1,6 +1,7 @@
 ---
 import { brand } from "../data/brand";
 import { href } from "../lib/href";
+import Logo from "./Logo.astro";
 import { residentialServices, commercialServices, strataServices } from "../data/services";
 import { areas } from "../data/areas";
 ---
@@ -8,7 +9,7 @@ import { areas } from "../data/areas";
 <footer class="bg-euc-dk text-chalk">
   <div class="mx-auto max-w-page px-5 md:px-8 py-12 grid sm:grid-cols-2 lg:grid-cols-5 gap-8 text-[15px]">
     <div>
-      <p class="display text-[18px] font-semibold">{brand.name}</p>
+      <Logo class="flex items-center gap-2.5 text-chalk" />
       <p class="mt-2 text-euc-lt">{brand.region}</p>
       <p class="mt-3">
         <a class="text-chalk hover:underline" href={brand.phoneHref}>{brand.phone}</a>
