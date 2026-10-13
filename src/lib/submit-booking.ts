@@ -14,16 +14,30 @@ async function readJson(res: Response) {
 }
 
 export async function submitBooking(payload: BookingRequest) {
+  const body = JSON.stringify(payload);
+
   try {
     const res = await fetch(href("/api/book/"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body,
     });
     const data = await readJson(res);
     if (res.ok && data?.ok) return { ok: true as const, email: data.email };
   } catch {
     /* Hostinger static hosting has no /api/book/ — fall through. */
+  }
+
+  try {
+    const res = await fetch(href("/book-send.php"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body,
+    });
+    const data = await readJson(res);
+    if (res.ok && data?.ok) return { ok: true as const, email: data.email || String(payload.email || "") };
+  } catch {
+    /* PHP mailer missing — fall through. */
   }
 
   try {
