@@ -34,6 +34,11 @@ export function isEmail(value: string) {
   return emailPattern.test(value.trim());
 }
 
+export function isPhone(value: string) {
+  const digits = value.replace(/\D/g, "");
+  return digits.length >= 10 && digits.length <= 15;
+}
+
 export function addonLabels(ids: string[]) {
   return addOns.filter((item) => ids.includes(item.id)).map((item) => `${item.label} (+$${item.price})`);
 }

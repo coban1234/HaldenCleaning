@@ -9,7 +9,9 @@ import {
   type Frequency,
   type ServiceLevel,
 } from "../data/pricing";
-import { href } from "../lib/href";
+import { brand } from "../data/brand";
+import { isEmail, isPhone } from "../lib/booking-email";
+import { submitBooking } from "../lib/submit-booking";
 
 const steps = ["Your home", "Service", "When", "Details"] as const;
 const field =
@@ -76,15 +78,36 @@ export default function BookingFlow({
 
   const priceLabel = quote.price == null ? "Walkthrough" : `$${quote.price} flat`;
 
+  const today = new Date().toISOString().slice(0, 10);
+
+  function validate(forStep?: number) {
+    if (forStep === undefined || forStep >= 2) {
+      if (!date) return { step: 2, message: "Choose a preferred date." };
+    }
+    if (forStep === undefined || forStep >= 3) {
+      if (!name.trim()) return { step: 3, message: "Name is required." };
+      if (!address.trim()) return { step: 3, message: "Address is required." };
+      if (!isEmail(email)) return { step: 3, message: "A valid email is required." };
+      if (!isPhone(phone)) return { step: 3, message: "A phone number is required." };
+    }
+    return null;
+  }
+
   if (done) {
     return (
-      <div className="bg-paper border border-line rounded-card p-8 max-w-xl">
-        <p className="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Confirmed</p>
-        <h2 className="display font-semibold fs-h2 mt-2">Booking received.</h2>
+      <div
+        className="bg-paper border-[1.5px] border-euc rounded-card p-8 max-w-xl"
+        role="status"
+        aria-live="polite"
+      >
+        <p className="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Booking done</p>
+        <h2 className="display font-semibold fs-h2 mt-2">We've got it.</h2>
         <p className="mt-3 text-slate">
+          Your booking for {date} is in. We'll confirm at {sentTo}
+          {phone ? ` and ${phone}` : ""}.
           {quote.price == null
-            ? `A manager will confirm the walkthrough by email to ${sentTo}.`
-            : `A confirmation with the full room-by-room scope is on its way to ${sentTo}. Price stays $${quote.price} flat.`}
+            ? " A manager will confirm the walkthrough."
+            : ` The price stays $${quote.price} flat. Payment is at the visit.`}
         </p>
       </div>
     );
@@ -93,52 +116,55 @@ export default function BookingFlow({
   return (
     <form
       className="flex flex-col gap-6 min-w-0 md:grid md:grid-cols-[minmax(0,1fr)_minmax(220px,280px)] pb-24 md:pb-0"
+      noValidate
       onSubmit={async (e) => {
         e.preventDefault();
         const wide = window.matchMedia("(min-width: 1280px)").matches;
         if (!wide && step < 3) {
+          if (step === 2 && !date) {
+            setError("Choose a preferred date.");
+            return;
+          }
+          setError("");
           setStep(step + 1);
           window.scrollTo({ top: 0, behavior: "smooth" });
           return;
         }
+        const blocked = validate();
+        if (blocked) {
+          setError(blocked.message);
+          setStep(blocked.step);
+          return;
+        }
         setError("");
         setSending(true);
-        try {
-          const res = await fetch(href("/api/book/"), {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name,
-              email,
-              phone,
-              address,
-              access,
-              notes,
-              pets,
-              parking,
-              sqft,
-              beds,
-              baths,
-              service,
-              freq,
-              addons,
-              date,
-              price: quote.price,
-              duration: quote.duration,
-            }),
-          });
-          const data = (await res.json()) as { ok?: boolean; error?: string; email?: string };
-          if (!res.ok || !data.ok) {
-            setError(data.error || "We could not send the confirmation. Try again.");
-            return;
-          }
-          setSentTo(data.email || email);
-          setDone(true);
-        } catch {
-          setError("We could not send the confirmation. Check your connection and try again.");
-        } finally {
-          setSending(false);
+        const payload = {
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          address: address.trim(),
+          access,
+          notes,
+          pets,
+          parking,
+          sqft,
+          beds,
+          baths,
+          service,
+          freq,
+          addons,
+          date,
+          price: quote.price,
+          duration: quote.duration,
+        };
+        const result = await submitBooking(payload);
+        setSending(false);
+        if (!result.ok) {
+          setError(`We could not send the booking. Call ${brand.phone} or try again.`);
+          return;
         }
+        setSentTo(result.email || email);
+        setDone(true);
       }}
     >
       <div className="bg-paper border border-line rounded-card p-5 md:p-8">
@@ -294,11 +320,13 @@ export default function BookingFlow({
           <h2 className="font-semibold fs-h3">When</h2>
           <label className="block">
             <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">
-              Preferred date
+              Preferred date *
             </span>
             <input
               type="date"
               className={field}
+              required
+              min={today}
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
@@ -309,7 +337,7 @@ export default function BookingFlow({
           <h2 className="font-semibold fs-h3">Details</h2>
           <label className="block">
             <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">
-              Name
+              Name *
             </span>
             <input
               className={field}
@@ -321,7 +349,7 @@ export default function BookingFlow({
           </label>
           <label className="block">
             <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">
-              Address
+              Address *
             </span>
             <input
               className={field}
@@ -333,7 +361,7 @@ export default function BookingFlow({
           </label>
           <label className="block">
             <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">
-              Email
+              Email *
             </span>
             <input
               className={field}
@@ -346,11 +374,12 @@ export default function BookingFlow({
           </label>
           <label className="block">
             <span className="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">
-              Phone
+              Phone *
             </span>
             <input
               className={field}
               type="tel"
+              required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               autoComplete="tel"
@@ -378,7 +407,11 @@ export default function BookingFlow({
           </label>
         </div>
 
-        {error && <p className="mt-6 text-[15px] text-euc">{error}</p>}
+        {error && (
+          <p className="mt-6 text-[15px] font-medium text-ink" role="alert">
+            {error}
+          </p>
+        )}
         <div className="mt-8 hidden md:flex xl:hidden flex-wrap gap-3">
           {step > 0 && (
             <button
@@ -389,13 +422,30 @@ export default function BookingFlow({
               Back
             </button>
           )}
-          <button
-            type="submit"
-            disabled={sending}
-            className="min-h-[56px] px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h disabled:opacity-60"
-          >
-            {step < 3 ? "Continue" : sending ? "Sending…" : "Confirm booking"}
-          </button>
+          {step < 3 ? (
+            <button
+              type="button"
+              className="min-h-[56px] px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h"
+              onClick={() => {
+                if (step === 2 && !date) {
+                  setError("Choose a preferred date.");
+                  return;
+                }
+                setError("");
+                setStep(step + 1);
+              }}
+            >
+              Continue
+            </button>
+          ) : (
+            <button
+              type="submit"
+              disabled={sending}
+              className="min-h-[56px] px-8 rounded-full bg-brass text-chalk font-semibold hover:bg-brass-h disabled:opacity-60"
+            >
+              {sending ? "Sending…" : "Confirm booking"}
+            </button>
+          )}
         </div>
         <div className="mt-8 hidden xl:flex gap-3">
           <button
@@ -434,9 +484,27 @@ export default function BookingFlow({
         <p className="flex items-center justify-center px-2 tabular font-semibold text-[14px] xs:text-[16px] truncate" aria-live="polite">
           {priceLabel}
         </p>
-        <button type="submit" disabled={sending} className="min-h-[56px] px-4 xs:px-6 bg-brass text-chalk font-semibold disabled:opacity-60">
-          {step < 3 ? "Continue" : sending ? "…" : "Confirm"}
-        </button>
+        {step < 3 ? (
+          <button
+            type="button"
+            className="min-h-[56px] px-4 xs:px-6 bg-brass text-chalk font-semibold"
+            onClick={() => {
+              if (step === 2 && !date) {
+                setError("Choose a preferred date.");
+                return;
+              }
+              setError("");
+              setStep(step + 1);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            Continue
+          </button>
+        ) : (
+          <button type="submit" disabled={sending} className="min-h-[56px] px-4 xs:px-6 bg-brass text-chalk font-semibold disabled:opacity-60">
+            {sending ? "…" : "Confirm"}
+          </button>
+        )}
       </div>
     </form>
   );

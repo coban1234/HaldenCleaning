@@ -6,6 +6,7 @@ import { frequencyLabels, serviceLabels, type Frequency, type ServiceLevel } fro
 import {
   bookingEmail,
   isEmail,
+  isPhone,
   type BookingPayload,
 } from "../../lib/booking-email";
 
@@ -44,8 +45,10 @@ export const POST: APIRoute = async ({ request }) => {
   const freq = asString(body.freq) as Frequency;
   const addons = Array.isArray(body.addons) ? body.addons.filter((id): id is string => typeof id === "string") : [];
 
-  if (!name || !address || !isEmail(email)) {
-    return json({ ok: false, error: "Name, address and a valid email are required." }, 400);
+  const date = asString(body.date);
+  const phone = asString(body.phone);
+  if (!name || !address || !isEmail(email) || !isPhone(phone) || !date) {
+    return json({ ok: false, error: "Date, name, address, email and phone are required." }, 400);
   }
   if (!services.includes(service) || !frequencies.includes(freq)) {
     return json({ ok: false, error: "Choose a service and frequency." }, 400);
@@ -54,7 +57,7 @@ export const POST: APIRoute = async ({ request }) => {
   const payload: BookingPayload = {
     name,
     email,
-    phone: asString(body.phone),
+    phone,
     address,
     access: asString(body.access),
     notes: asString(body.notes),
@@ -66,7 +69,7 @@ export const POST: APIRoute = async ({ request }) => {
     service,
     freq,
     addons,
-    date: asString(body.date),
+    date,
     price: body.price == null ? null : asNumber(body.price),
     duration: asString(body.duration) || "Quoted after a walkthrough",
   };
