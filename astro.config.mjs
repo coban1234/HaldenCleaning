@@ -11,7 +11,7 @@ const onVercel = Boolean(process.env.VERCEL);
 export default defineConfig({
   site: githubPages
     ? "https://coban1234.github.io"
-    : "https://haldencleaning.ca",
+    : "https://haldencleaning.com",
   base: githubPages ? "/HaldenCleaning/" : "/",
   trailingSlash: "always",
   redirects: {
