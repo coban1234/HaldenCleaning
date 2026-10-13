@@ -1,9 +1,9 @@
 export const brand = {
-  name: "HalderCleaning",
-  legalName: "HalderCleaning",
+  name: "HaldenCleaning",
+  legalName: "HaldenCleaning",
   region: "Vancouver & the Fraser Valley",
-  domain: "https://haldercleaning.ca",
-  email: "hello@haldercleaning.ca",
+  domain: "https://haldencleaning.ca",
+  email: "hello@haldencleaning.ca",
   phone: "604-555-0148",
   phoneHref: "tel:+16045550148",
   address: "Vancouver, BC",

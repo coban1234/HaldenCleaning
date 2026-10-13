@@ -23,7 +23,7 @@ function asNumber(value: unknown) {
 
 export const POST: APIRoute = async ({ request }) => {
   const key = import.meta.env.RESEND_API_KEY as string | undefined;
-  const from = (import.meta.env.BOOKING_FROM as string | undefined) || `HalderCleaning <${brand.email}>`;
+  const from = (import.meta.env.BOOKING_FROM as string | undefined) || `HaldenCleaning <${brand.email}>`;
   const ops = (import.meta.env.BOOKING_OPS_EMAIL as string | undefined) || brand.email;
 
   if (!key) {

@@ -15,7 +15,7 @@ export type ServicePage = {
 export const residentialServices: ServicePage[] = [
   {
     slug: "recurring",
-    title: "Recurring House Cleaning Vancouver | Flat Rate | HalderCleaning",
+    title: "Recurring House Cleaning Vancouver | Flat Rate | HaldenCleaning",
     h1: "The same people. A price that does not move.",
     meta: "Weekly, bi-weekly and monthly house cleaning across Vancouver and the Fraser Valley. Flat rate, published scope, crews scheduled by area.",
     eyebrow: "Home cleaning · Recurring",
@@ -30,7 +30,7 @@ export const residentialServices: ServicePage[] = [
   },
   {
     slug: "deep-clean",
-    title: "Deep Cleaning Vancouver | 82 Checkpoints | HalderCleaning",
+    title: "Deep Cleaning Vancouver | 82 Checkpoints | HaldenCleaning",
     h1: "Deep clean: 82 checks, not a mood.",
     meta: "Deep house cleaning in Vancouver with inside oven and fridge included. See the difference from a standard visit, checkpoint by checkpoint.",
     eyebrow: "Home cleaning · Deep clean",
@@ -45,7 +45,7 @@ export const residentialServices: ServicePage[] = [
   },
   {
     slug: "move-in-move-out",
-    title: "Move Out Cleaning Vancouver | Deposit-Ready | HalderCleaning",
+    title: "Move Out Cleaning Vancouver | Deposit-Ready | HaldenCleaning",
     h1: "Move-out cleaning that matches the inspection.",
     meta: "End-of-tenancy and move-in cleaning in Vancouver. 96 checkpoints including inside cabinets, oven and fridge. Flat rate.",
     eyebrow: "Home cleaning · Move-in / move-out",
@@ -60,7 +60,7 @@ export const residentialServices: ServicePage[] = [
   },
   {
     slug: "post-renovation",
-    title: "Post Renovation Cleaning Vancouver | HalderCleaning",
+    title: "Post Renovation Cleaning Vancouver | HaldenCleaning",
     h1: "Construction dust is a different job.",
     meta: "Post-renovation cleaning in Vancouver and the Fraser Valley. Drywall dust, sticker residue, tracks — not a standard visit with extra adjectives.",
     eyebrow: "Home cleaning · Post-renovation",
@@ -75,7 +75,7 @@ export const residentialServices: ServicePage[] = [
   },
   {
     slug: "airbnb-turnover",
-    title: "Airbnb Turnover Cleaning Vancouver | HalderCleaning",
+    title: "Airbnb Turnover Cleaning Vancouver | HaldenCleaning",
     h1: "Turnover with a checklist, not a rush.",
     meta: "Short-term rental turnover cleaning in Vancouver. Same checkpoint list, same crew, same flat rate.",
     eyebrow: "Home cleaning · Airbnb turnover",
@@ -93,7 +93,7 @@ export const residentialServices: ServicePage[] = [
 export const commercialServices: ServicePage[] = [
   {
     slug: "office-cleaning",
-    title: "Office Cleaning Vancouver | Per Square Foot | HalderCleaning",
+    title: "Office Cleaning Vancouver | Per Square Foot | HaldenCleaning",
     h1: "Office cleaning scoped like a facilities plan.",
     meta: "Office cleaning in Vancouver from $0.10–$0.30 per sq ft. Walkthrough required. Audit-ready inspection reports.",
     eyebrow: "Commercial · Offices",
@@ -108,7 +108,7 @@ export const commercialServices: ServicePage[] = [
   },
   {
     slug: "retail",
-    title: "Retail Cleaning Vancouver | HalderCleaning",
+    title: "Retail Cleaning Vancouver | HaldenCleaning",
     h1: "Retail floors that survive open hours.",
     meta: "Retail cleaning in Vancouver. Daily or overnight programmes with a walkthrough-confirmed scope.",
     eyebrow: "Commercial · Retail",
@@ -123,7 +123,7 @@ export const commercialServices: ServicePage[] = [
   },
   {
     slug: "green-cleaning-program",
-    title: "Green Cleaning Program | BOMA / LEED | HalderCleaning",
+    title: "Green Cleaning Program | BOMA / LEED | HaldenCleaning",
     h1: "Audit-ready from the first contract.",
     meta: "Green cleaning plan, digital inspection reports and SDS index for BOMA Best and LEED v4.1 documentation in Vancouver.",
     eyebrow: "Commercial · Green cleaning program",
@@ -141,7 +141,7 @@ export const commercialServices: ServicePage[] = [
 export const strataServices: ServicePage[] = [
   {
     slug: "common-areas",
-    title: "Strata Common Area Cleaning BC | HalderCleaning",
+    title: "Strata Common Area Cleaning BC | HaldenCleaning",
     h1: "Lobbies, corridors, and the floors people actually see.",
     meta: "Strata common-area cleaning in Metro Vancouver. Lobbies, hallways, elevators — scoped per building, documented every visit.",
     eyebrow: "Strata · Common areas",
@@ -156,7 +156,7 @@ export const strataServices: ServicePage[] = [
   },
   {
     slug: "amenity-cleaning",
-    title: "Strata Amenity Cleaning | Gym, Pool, Party Room | HalderCleaning",
+    title: "Strata Amenity Cleaning | Gym, Pool, Party Room | HaldenCleaning",
     h1: "Amenities are where complaints start.",
     meta: "Gym, pool deck, party room, theatre and guest-suite cleaning for Metro Vancouver strata. Checklist-scoped.",
     eyebrow: "Strata · Amenities",
@@ -171,7 +171,7 @@ export const strataServices: ServicePage[] = [
   },
   {
     slug: "caretaking",
-    title: "Strata Caretaking | Combined Contract | HalderCleaning",
+    title: "Strata Caretaking | Combined Contract | HaldenCleaning",
     h1: "Cleaning and caretaking as one contract.",
     meta: "Combined cleaning and caretaking for Metro Vancouver strata. One crew, one report, one property-manager contact.",
     eyebrow: "Strata · Caretaking",
@@ -186,7 +186,7 @@ export const strataServices: ServicePage[] = [
   },
   {
     slug: "dryer-vent-cleaning",
-    title: "Dryer Vent Cleaning Strata | HalderCleaning",
+    title: "Dryer Vent Cleaning Strata | HaldenCleaning",
     h1: "Dryer vents: fire prevention, usually an insurance item.",
     meta: "Strata dryer vent cleaning for laundry rooms and in-suite stacks in Metro Vancouver. Recurring, documented.",
     eyebrow: "Strata · Dryer vents",
