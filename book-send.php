@@ -98,7 +98,7 @@ if ($name === "" || !$email || $phone === "" || $address === "" || $date === "")
   exit;
 }
 
-$ops = "hello@haldencleaning.com";
+$ops = "office@haldencleaning.com";
 $service = field($data, "service");
 $freq = field($data, "frequency") !== "" ? field($data, "frequency") : field($data, "freq");
 $beds = field($data, "beds");
