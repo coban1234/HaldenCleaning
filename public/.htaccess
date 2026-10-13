@@ -1,1 +1,5 @@
 DirectoryIndex index.html
+
+<Files "resend-secret.php">
+  Require all denied
+</Files>

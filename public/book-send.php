@@ -45,6 +45,55 @@ function smtp_cmd($fp, $command) {
   return smtp_read($fp);
 }
 
+function resend_api_key() {
+  $env = getenv("RESEND_API_KEY");
+  if (is_string($env) && strpos($env, "re_") === 0) {
+    return $env;
+  }
+  foreach (array(dirname(__DIR__) . "/resend-secret.php", __DIR__ . "/resend-secret.php") as $path) {
+    if (!is_file($path)) {
+      continue;
+    }
+    $value = include $path;
+    if (is_string($value) && strpos($value, "re_") === 0) {
+      return $value;
+    }
+  }
+  return "";
+}
+
+function send_via_resend($to, $from, $subject, $text, $replyTo) {
+  $key = resend_api_key();
+  if ($key === "") {
+    return false;
+  }
+  $payload = json_encode(array(
+    "from" => $from,
+    "to" => array($to),
+    "reply_to" => $replyTo,
+    "subject" => $subject,
+    "text" => $text,
+  ));
+  if (!function_exists("curl_init")) {
+    return false;
+  }
+  $ch = curl_init("https://api.resend.com/emails");
+  curl_setopt_array($ch, array(
+    CURLOPT_POST => true,
+    CURLOPT_HTTPHEADER => array(
+      "Authorization: Bearer " . $key,
+      "Content-Type: application/json",
+    ),
+    CURLOPT_POSTFIELDS => $payload,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT => 20,
+  ));
+  curl_exec($ch);
+  $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch);
+  return $code >= 200 && $code < 300;
+}
+
 /**
  * Deliver to Google Workspace via MX. Hostinger mail() keeps
  * @haldencleaning.com messages on the local server instead of Google.
@@ -99,6 +148,7 @@ if ($name === "" || !$email || $phone === "" || $address === "" || $date === "")
 }
 
 $ops = "office@haldencleaning.com";
+$from = "HaldenCleaning <office@haldencleaning.com>";
 $service = field($data, "service");
 $freq = field($data, "frequency") !== "" ? field($data, "frequency") : field($data, "freq");
 $beds = field($data, "beds");
@@ -148,12 +198,22 @@ $clientOk = @mail(
   "-f website@haldencleaning.com"
 );
 
-$opsOk = send_to_google_workspace(
+$opsOk = send_via_resend(
   $ops,
+  $from,
   "HaldenCleaning booking — $name",
   $opsBody,
   $email
 );
+
+if (!$opsOk) {
+  $opsOk = send_to_google_workspace(
+    $ops,
+    "HaldenCleaning booking — $name",
+    $opsBody,
+    $email
+  );
+}
 
 if (!$opsOk && !$clientOk) {
   http_response_code(502);
