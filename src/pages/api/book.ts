@@ -1,6 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
+import { Resend } from "resend";
 import { brand } from "../../data/brand";
 import { frequencyLabels, serviceLabels, type Frequency, type ServiceLevel } from "../../data/pricing";
 import {
@@ -75,26 +76,18 @@ export const POST: APIRoute = async ({ request }) => {
   };
 
   const message = bookingEmail(payload);
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [payload.email],
-      bcc: ops && ops !== payload.email ? [ops] : undefined,
-      subject: message.subject,
-      html: message.html,
-      text: message.text,
-    }),
+  const resend = new Resend(key);
+  const { error } = await resend.emails.send({
+    from,
+    to: [payload.email],
+    bcc: ops && ops !== payload.email ? [ops] : undefined,
+    subject: message.subject,
+    html: message.html,
+    text: message.text,
   });
 
-  if (!res.ok) {
-    const detail = await res.text();
-    console.error("Resend error", res.status, detail);
+  if (error) {
+    console.error("Resend error", error);
     return json({ ok: false, error: "We could not send the confirmation. Try again." }, 502);
   }
 
