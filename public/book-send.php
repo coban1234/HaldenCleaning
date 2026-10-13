@@ -76,19 +76,17 @@ $lines = [
 ];
 $body = implode("\n", $lines);
 
-$headers = "From: HaldenCleaning <noreply@haldencleaning.com>\r\n";
-$headers .= "Reply-To: $email\r\n";
-$headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+$from = "HaldenCleaning <hello@haldencleaning.com>";
+$envelope = "-f hello@haldencleaning.com";
 
-$envelope = "-f noreply@haldencleaning.com";
-$opsOk = @mail($ops, "HaldenCleaning booking — $name", $body, $headers, $envelope);
-$clientOk = @mail(
-  $email,
-  "HaldenCleaning booking received",
-  "Hi $name,\n\nWe received your booking for $date.\nWe'll confirm at this email and at $phone.\n\n" . $body . "\n\nHaldenCleaning\n(604) 968-5835\n",
-  "From: HaldenCleaning <noreply@haldencleaning.com>\r\nContent-Type: text/plain; charset=UTF-8\r\n",
-  $envelope
-);
+$opsBody = "New website booking\n\n" . $body;
+$clientBody = "Hi $name,\n\nWe received your booking for $date.\nWe'll confirm at this email and at $phone.\n\n" . $body . "\n\nHaldenCleaning\n(604) 968-5835\n";
+
+$opsHeaders = "From: $from\r\nReply-To: $email\r\nContent-Type: text/plain; charset=UTF-8\r\n";
+$clientHeaders = "From: $from\r\nReply-To: hello@haldencleaning.com\r\nBcc: $ops\r\nContent-Type: text/plain; charset=UTF-8\r\n";
+
+$opsOk = @mail($ops, "HaldenCleaning booking — $name", $opsBody, $opsHeaders, $envelope);
+$clientOk = @mail($email, "HaldenCleaning booking received", $clientBody, $clientHeaders, $envelope);
 
 if (!$opsOk && !$clientOk) {
   http_response_code(502);
