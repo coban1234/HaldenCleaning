@@ -29,6 +29,63 @@ function field($data, $key) {
   return trim((string) $value);
 }
 
+function smtp_read($fp) {
+  $data = "";
+  while (($line = fgets($fp, 515)) !== false) {
+    $data .= $line;
+    if (isset($line[3]) && $line[3] === " ") {
+      break;
+    }
+  }
+  return $data;
+}
+
+function smtp_cmd($fp, $command) {
+  fwrite($fp, $command . "\r\n");
+  return smtp_read($fp);
+}
+
+/**
+ * Deliver to Google Workspace via MX. Hostinger mail() keeps
+ * @haldencleaning.com messages on the local server instead of Google.
+ */
+function send_to_google_workspace($to, $subject, $body, $replyTo) {
+  $domain = substr(strrchr($to, "@"), 1);
+  if (!$domain || !getmxrr($domain, $hosts, $weights)) {
+    return false;
+  }
+  array_multisort($weights, $hosts);
+  $payload = "From: HaldenCleaning <website@haldencleaning.com>\r\n";
+  $payload .= "To: <$to>\r\n";
+  $payload .= "Reply-To: <$replyTo>\r\n";
+  $payload .= "Subject: $subject\r\n";
+  $payload .= "Content-Type: text/plain; charset=UTF-8\r\n";
+  $payload .= "\r\n";
+  $payload .= $body;
+  $payload .= "\r\n.\r\n";
+
+  foreach ($hosts as $host) {
+    $fp = @fsockopen($host, 25, $errno, $errstr, 12);
+    if (!$fp) {
+      continue;
+    }
+    stream_set_timeout($fp, 12);
+    smtp_read($fp);
+    smtp_cmd($fp, "EHLO haldencleaning.com");
+    $from = smtp_cmd($fp, "MAIL FROM:<website@haldencleaning.com>");
+    $rcpt = smtp_cmd($fp, "RCPT TO:<$to>");
+    $data = smtp_cmd($fp, "DATA");
+    fwrite($fp, $payload);
+    $done = smtp_read($fp);
+    smtp_cmd($fp, "QUIT");
+    fclose($fp);
+    if (strpos($from, "250") === 0 && strpos($rcpt, "250") === 0 && strpos($done, "250") === 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
 $name = field($data, "name");
 $email = filter_var(field($data, "email"), FILTER_VALIDATE_EMAIL);
 $phone = field($data, "phone");
@@ -76,17 +133,27 @@ $lines = [
 ];
 $body = implode("\n", $lines);
 
-$from = "HaldenCleaning <hello@haldencleaning.com>";
-$envelope = "-f hello@haldencleaning.com";
-
 $opsBody = "New website booking\n\n" . $body;
 $clientBody = "Hi $name,\n\nWe received your booking for $date.\nWe'll confirm at this email and at $phone.\n\n" . $body . "\n\nHaldenCleaning\n(604) 968-5835\n";
 
-$opsHeaders = "From: $from\r\nReply-To: $email\r\nContent-Type: text/plain; charset=UTF-8\r\n";
-$clientHeaders = "From: $from\r\nReply-To: hello@haldencleaning.com\r\nBcc: $ops\r\nContent-Type: text/plain; charset=UTF-8\r\n";
+$clientHeaders = "From: HaldenCleaning <website@haldencleaning.com>\r\n";
+$clientHeaders .= "Reply-To: $ops\r\n";
+$clientHeaders .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-$opsOk = @mail($ops, "HaldenCleaning booking — $name", $opsBody, $opsHeaders, $envelope);
-$clientOk = @mail($email, "HaldenCleaning booking received", $clientBody, $clientHeaders, $envelope);
+$clientOk = @mail(
+  $email,
+  "HaldenCleaning booking received",
+  $clientBody,
+  $clientHeaders,
+  "-f website@haldencleaning.com"
+);
+
+$opsOk = send_to_google_workspace(
+  $ops,
+  "HaldenCleaning booking — $name",
+  $opsBody,
+  $email
+);
 
 if (!$opsOk && !$clientOk) {
   http_response_code(502);
