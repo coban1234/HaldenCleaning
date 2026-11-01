@@ -17,7 +17,13 @@ export default defineConfig({
   redirects: {
     "/our-team/": "/",
   },
-  integrations: [tailwind(), react(), sitemap()],
+  integrations: [
+    tailwind(),
+    react(),
+    sitemap({
+      filter: (page) => !page.includes("/404") && !page.includes("/api/"),
+    }),
+  ],
   output: "static",
   adapter: onVercel ? vercel() : node({ mode: "standalone" }),
 });

@@ -13,8 +13,8 @@ import { href } from "../../lib/href";
 ---
 
 <BaseLayout
-  title={`Commercial Cleaning Vancouver | Walkthrough | ${brand.name}`}
-  description="Office, retail and documented green-cleaning programmes in Vancouver. Indicative per-square-foot ranges, confirmed at walkthrough."
+  title={`Commercial Cleaning Services Vancouver | ${brand.name}`}
+  description="Commercial cleaning services in Vancouver and the Fraser Valley. Explore cleaning solutions for offices and commercial properties. Request a quote today."
   canonical="/commercial/"
   cta="walkthrough"
   jsonLd={serviceLd("Commercial cleaning", "/commercial/", "Commercial janitorial with audit-ready documentation.")}
@@ -22,12 +22,21 @@ import { href } from "../../lib/href";
   <article class="mx-auto max-w-page px-5 md:px-8 py-8">
     <Breadcrumbs items={[{ href: "/", label: "Home" }, { label: "Commercial" }]} />
     <p class="mt-6 text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Commercial</p>
-    <h1 class="display mt-3 font-semibold fs-hero max-w-[18ch]">Scoped like a facilities plan.</h1>
-    <p class="mt-3 max-w-[50ch] text-slate fs-lead">
-      Per square foot, per month. A walkthrough confirms the number. Documentation from the first contract.
+    <h1 class="display mt-3 font-semibold fs-hero max-w-[18ch]">Commercial cleaning services in Vancouver</h1>
+    <p class="mt-3 max-w-[52ch] text-slate fs-lead">
+      A clean workplace supports a professional environment for employees, customers, and visitors.
+      HaldenCleaning provides commercial cleaning for offices, retail, and documented green-cleaning
+      programmes across Vancouver and the Fraser Valley. A walkthrough confirms the monthly figure —
+      buildings are not booked through the house-cleaning form.
     </p>
+    <a
+      href={href("/contact/")}
+      class="mt-6 inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-10 rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
+    >
+      Request a commercial cleaning quote
+    </a>
     <div class="mt-8 overflow-hidden rounded-photo">
-      <img src={images.office} alt="Daylit office ready for a janitorial programme." class="w-full aspect-[4/5] md:aspect-[16/9] object-cover" />
+      <img src={images.office} alt="Daylit Vancouver office ready for a commercial cleaning programme." class="w-full aspect-[4/5] md:aspect-[16/9] object-cover" width="1200" height="800" decoding="async" />
     </div>
   </article>
 
@@ -81,6 +90,7 @@ import { href } from "../../lib/href";
   </section>
 
   <section class="mx-auto max-w-page px-5 md:px-8 pb-16">
+    <h2 class="display font-semibold fs-h2 mb-6">FAQs</h2>
     <FaqList items={[...faqs.commercial]} />
   </section>
 </BaseLayout>

@@ -4,10 +4,12 @@ export function localBusinessLd() {
   return {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "HomeAndConstructionBusiness"],
+    "@id": `${brand.domain}/#business`,
     name: brand.legalName,
     url: brand.domain,
     telephone: brand.phone,
     email: brand.email,
+    image: `${brand.domain}/brand/halden-logo-on-chalk.png`,
     areaServed: ["Vancouver", "Burnaby", "Richmond", "North Vancouver", "Surrey", "Coquitlam"],
     address: {
       "@type": "PostalAddress",
@@ -25,7 +27,11 @@ export function serviceLd(name: string, url: string, description: string) {
     "@type": "Service",
     name,
     description,
-    provider: { "@type": "LocalBusiness", name: brand.legalName },
+    provider: {
+      "@type": "LocalBusiness",
+      "@id": `${brand.domain}/#business`,
+      name: brand.legalName,
+    },
     areaServed: "Metro Vancouver",
     url: `${brand.domain}${url}`,
   };

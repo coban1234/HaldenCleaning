@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thresholdcleaning.ca/sitemap-index.xml
+Sitemap: https://haldencleaning.com/sitemap-index.xml

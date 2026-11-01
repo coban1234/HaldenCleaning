@@ -42,8 +42,8 @@ const prices = [
 ---
 
 <BaseLayout
-  title={`House & Commercial Cleaning Vancouver | Flat Rate | ${brand.name}`}
-  description="Flat-rate home cleaning across Vancouver and the Fraser Valley, plus commercial and strata programs. See the full room-by-room scope and your price before you book."
+  title={`Cleaning Services in Vancouver & Fraser Valley | ${brand.name}`}
+  description="Professional house, commercial, and strata cleaning in Vancouver and the Fraser Valley. Transparent pricing, clear checklists, and easy online booking."
   canonical="/"
   jsonLd={localBusinessLd()}
 >
@@ -56,6 +56,8 @@ const prices = [
           class="absolute inset-0 h-full w-full object-cover"
           width="1800"
           height="1013"
+          fetchpriority="high"
+          decoding="async"
         />
       </div>
     </div>
@@ -63,25 +65,34 @@ const prices = [
       <div class="grid gap-8 md:grid-cols-2 md:gap-12 md:items-start">
         <div>
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{brand.region}</p>
-          <h1 class="display mt-3 font-semibold leading-[1.08] fs-hero max-w-[14ch] md:max-w-none">
-            See every room before you book.
+          <h1 class="display mt-3 font-semibold leading-[1.08] fs-hero max-w-[18ch] md:max-w-none">
+            Professional cleaning services in Vancouver &amp; the Fraser Valley
           </h1>
         </div>
         <div class="md:pt-8">
           <p class="text-ink fs-lead">
-            Flat-rate cleaning with the full scope published — every check, every room, and what each
-            add-on costs.
+            A simpler way to book professional cleaning. HaldenCleaning provides residential, commercial,
+            and strata cleaning across Vancouver and the Fraser Valley, with transparent pricing, detailed
+            cleaning checklists, and online booking.
           </p>
           <p class="mt-4 tabular text-slate text-[15px]">
             2 bed, 2 bath · bi-weekly from
             <span class="font-semibold text-ink">${twoTwo.price}</span>
           </p>
-          <a
-            href="#quote"
-            class="mt-6 inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-10 rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
-          >
-            Get my price
-          </a>
+          <div class="mt-6 flex flex-col sm:flex-row flex-wrap gap-3">
+            <a
+              href="#quote"
+              class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-10 rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
+            >
+              Book your cleaning
+            </a>
+            <a
+              href="#services"
+              class="inline-flex items-center justify-center min-h-[56px] w-full sm:w-auto px-10 rounded-full border-[1.5px] border-ink text-[15px] font-semibold"
+            >
+              Explore our services
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -98,33 +109,33 @@ const prices = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-page px-5 md:px-8 pb-[72px] md:pb-32">
-    <h2 class="display font-semibold fs-h2">Three businesses. Same standard.</h2>
+  <section id="services" class="mx-auto max-w-page px-5 md:px-8 pb-[72px] md:pb-32 scroll-mt-20">
+    <h2 class="display font-semibold fs-h2">House, commercial, and strata cleaning</h2>
     <p class="mt-2 text-slate max-w-[66ch]">
       A property manager and a homeowner should never have to read past each other's content.
     </p>
     <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
       <a href={href("/home-cleaning/")} class="lift bg-paper border border-line rounded-card overflow-hidden">
-        <img src={images.residential} alt="Residential kitchen after a recurring clean." class="w-full aspect-[3/2] object-cover" />
+        <img src={images.residential} alt="Residential kitchen after a recurring house cleaning in Vancouver." class="w-full aspect-[3/2] object-cover" width="1200" height="800" loading="lazy" decoding="async" />
         <div class="p-5">
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Residential</p>
-          <h3 class="mt-1 font-semibold fs-h3">Home</h3>
+          <h3 class="mt-1 font-semibold fs-h3">House cleaning</h3>
           <p class="mt-1 text-slate text-[15px]">Flat rate by home size. Book online in minutes.</p>
         </div>
       </a>
       <a href={href("/commercial/")} class="lift bg-paper border border-line rounded-card overflow-hidden">
-        <img src={images.commercial} alt="Daylit office interior for commercial janitorial." class="w-full aspect-[3/2] object-cover" />
+        <img src={images.commercial} alt="Daylit Vancouver office interior for commercial cleaning." class="w-full aspect-[3/2] object-cover" width="1200" height="800" loading="lazy" decoding="async" />
         <div class="p-5">
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Commercial</p>
-          <h3 class="mt-1 font-semibold fs-h3">Commercial</h3>
+          <h3 class="mt-1 font-semibold fs-h3">Commercial cleaning</h3>
           <p class="mt-1 text-slate text-[15px]">Per square foot, per month. Request a walkthrough.</p>
         </div>
       </a>
       <a href={href("/strata/")} class="lift bg-paper border border-line rounded-card overflow-hidden">
-        <img src={images.strata} alt="Residential tower exterior for strata common-area programs." class="w-full aspect-[3/2] object-cover" />
+        <img src={images.strata} alt="Residential tower exterior for strata common-area cleaning programs." class="w-full aspect-[3/2] object-cover" width="1200" height="800" loading="lazy" decoding="async" />
         <div class="p-5">
           <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Strata</p>
-          <h3 class="mt-1 font-semibold fs-h3">Strata</h3>
+          <h3 class="mt-1 font-semibold fs-h3">Strata cleaning</h3>
           <p class="mt-1 text-slate text-[15px]">Scoped per building. AGM-ready reporting.</p>
         </div>
       </a>
@@ -188,7 +199,7 @@ const prices = [
               href={row.href}
               class="mt-6 inline-flex items-center justify-center min-h-[56px] rounded-full bg-brass text-chalk text-[15px] font-semibold hover:bg-brass-h"
             >
-              Book this
+              Book this house cleaning
             </a>
           </article>
         ))
@@ -216,7 +227,7 @@ const prices = [
         </p>
       </article>
       <article class="p-6 md:p-8 border-b md:border-b-0 md:border-r border-line flex flex-col">
-        <h2 class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Areas</h2>
+        <h2 class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">Areas we serve</h2>
         <ul class="mt-6 divide-y divide-line border-y border-line">
           {
             areas.map((area) => (

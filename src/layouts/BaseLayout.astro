@@ -6,17 +6,17 @@ type Props = {
   cta?: "book" | "walkthrough";
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   sticky?: boolean;
+  noindex?: boolean;
 };
 
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import CtaBand from "../components/CtaBand.astro";
 import StickyBar from "../components/StickyBar.astro";
-import { brand } from "../data/brand";
+import SEO from "../components/SEO.astro";
 import "../styles/global.css";
 
-const { title, description, canonical, cta = "book", jsonLd, sticky = true } = Astro.props;
-const url = canonical.startsWith("http") ? canonical : `${brand.domain}${canonical}`;
+const { title, description, canonical, cta = "book", jsonLd, sticky = true, noindex = false } = Astro.props;
 const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
@@ -26,15 +26,7 @@ const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <meta charset="UTF-8" />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={url} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={url} />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="en_CA" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <SEO title={title} description={description} canonical={canonical} noindex={noindex} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -3,3 +3,11 @@ DirectoryIndex index.html
 <Files "resend-secret.php">
   Require all denied
 </Files>
+
+RewriteEngine On
+RewriteCond %{REQUEST_METHOD} !=POST
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://haldencleaning.com%{REQUEST_URI} [L,R=301]
+RewriteCond %{REQUEST_METHOD} !=POST
+RewriteCond %{HTTP_HOST} ^www\.haldencleaning\.com$ [NC]
+RewriteRule ^ https://haldencleaning.com%{REQUEST_URI} [L,R=301]

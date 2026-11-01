@@ -1,0 +1,35 @@
+---
+import { brand } from "../data/brand";
+
+type Props = {
+  title: string;
+  description: string;
+  canonical: string;
+  noindex?: boolean;
+  ogImage?: string;
+};
+
+const { title, description, canonical, noindex = false, ogImage } = Astro.props;
+const url = canonical.startsWith("http") ? canonical : `${brand.domain}${canonical}`;
+const image = ogImage
+  ? ogImage.startsWith("http")
+    ? ogImage
+    : `${brand.domain}${ogImage}`
+  : `${brand.domain}/brand/halden-logo-on-chalk.png`;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={url} />
+{noindex ? <meta name="robots" content="noindex,follow" /> : null}
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={brand.name} />
+<meta property="og:locale" content="en_CA" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={url} />
+<meta property="og:image" content={image} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
