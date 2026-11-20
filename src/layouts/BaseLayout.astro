@@ -28,6 +28,7 @@ const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
       gtag('js', new Date());
       gtag('config', 'G-NB8B55QXNW');
     </script>
@@ -60,5 +61,15 @@ const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     <CtaBand cta={cta} />
     <Footer />
     {sticky && <StickyBar cta={cta} />}
+    <script>
+      import { trackPhoneClick } from "../lib/analytics";
+
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (!target.closest('a[href^="tel:"]')) return;
+        trackPhoneClick();
+      });
+    </script>
   </body>
 </html>

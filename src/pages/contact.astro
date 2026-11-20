@@ -23,7 +23,12 @@ import { href } from "../lib/href";
       ·
       <a class="text-euc underline" href={`mailto:${brand.email}`}>{brand.email}</a>
     </p>
-    <form class="mt-10 max-w-xl bg-paper border border-line rounded-card p-6 space-y-4" method="post" action={`mailto:${brand.email}`}>
+    <form
+      class="mt-10 max-w-xl bg-paper border border-line rounded-card p-6 space-y-4"
+      method="post"
+      action={`mailto:${brand.email}`}
+      data-quote-form
+    >
       <label class="block">
         <span class="text-[13px] font-semibold uppercase tracking-[0.06em] text-slate">Name</span>
         <input class="mt-1 w-full min-h-12 border border-line rounded-card px-3" name="name" required />
@@ -52,4 +57,24 @@ import { href } from "../lib/href";
       House cleaning? <a href={href("/book/")} class="text-euc underline">Book online →</a>
     </p>
   </article>
+  <script>
+    import { trackQuoteSubmitted } from "../lib/analytics";
+
+    function quoteServiceType() {
+      const fromQuery = new URLSearchParams(window.location.search).get("service");
+      if (fromQuery === "commercial" || fromQuery === "strata") return fromQuery;
+      try {
+        const referrer = new URL(document.referrer);
+        if (referrer.pathname.includes("/commercial")) return "commercial";
+        if (referrer.pathname.includes("/strata")) return "strata";
+      } catch {
+        /* no referrer */
+      }
+      return "walkthrough";
+    }
+
+    document.querySelector("[data-quote-form]")?.addEventListener("submit", () => {
+      trackQuoteSubmitted(quoteServiceType());
+    });
+  </script>
 </BaseLayout>

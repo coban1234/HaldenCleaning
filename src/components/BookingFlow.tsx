@@ -11,7 +11,11 @@ import {
 } from "../data/pricing";
 import { brand } from "../data/brand";
 import { isEmail, isPhone } from "../lib/booking-email";
+import { trackBookingComplete, trackBookingStart } from "../lib/analytics";
 import { submitBooking } from "../lib/submit-booking";
+
+let bookingStartTracked = false;
+let bookingCompleteTracked = false;
 
 const steps = ["Your home", "Service", "When", "Details"] as const;
 const field =
@@ -69,6 +73,10 @@ export default function BookingFlow({
     if (parsed.service in serviceLabels) setService(parsed.service);
     if (parsed.freq in frequencyLabels) setFreq(parsed.freq);
     if (parsed.addons.length) setAddons(parsed.addons);
+    if (!bookingStartTracked) {
+      bookingStartTracked = true;
+      trackBookingStart("residential");
+    }
   }, []);
 
   const quote = useMemo(
@@ -162,6 +170,13 @@ export default function BookingFlow({
         if (!result.ok) {
           setError(`We could not send the booking. Call ${brand.phone} or try again.`);
           return;
+        }
+        if (!bookingCompleteTracked) {
+          bookingCompleteTracked = true;
+          trackBookingComplete(
+            "residential",
+            typeof quote.price === "number" ? quote.price : undefined,
+          );
         }
         setSentTo(result.email || email);
         setDone(true);
