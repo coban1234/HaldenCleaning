@@ -92,7 +92,7 @@ const twoTwo = quotePrice(2, 2, "standard", "biweekly");
         residentialServices.map((s) => (
           <a href={href(`/home-cleaning/${s.slug}/`)} class="lift bg-paper border border-line rounded-card p-5">
             <p class="text-[11px] font-semibold tracking-[0.08em] uppercase text-euc">{s.eyebrow}</p>
-            <h3 class="mt-2 font-semibold fs-h3">{s.h1}</h3>
+            <h3 class="mt-2 font-semibold fs-h3">{s.listingTitle ?? s.h1}</h3>
             <p class="mt-2 text-slate">{s.lead}</p>
           </a>
         ))

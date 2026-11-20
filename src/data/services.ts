@@ -7,9 +7,15 @@ export type ServicePage = {
   meta: string;
   eyebrow: string;
   lead: string;
+  listingTitle?: string;
   cta: "book" | "walkthrough";
   image: string;
+  imageAlt?: string;
+  bookQuery?: string;
   points: { title: string; body: string }[];
+  sections?: { heading: string; paragraphs: string[] }[];
+  faqs?: { q: string; a: string }[];
+  showMoveOutRates?: boolean;
 };
 
 export const residentialServices: ServicePage[] = [
@@ -22,6 +28,7 @@ export const residentialServices: ServicePage[] = [
     lead: "Weekly, bi-weekly or monthly. The quoted price is the price on every visit — not a first-visit teaser.",
     cta: "book",
     image: images.residential,
+    imageAlt: "Vancouver kitchen after a recurring house cleaning visit.",
     points: [
       { title: "Frequency is priced in the open.", body: "Weekly, bi-weekly and monthly discounts apply live in the quote. You see the saving against one-time before you book." },
       { title: "The same people come back.", body: "Crews are scheduled against postal-code clusters. A rotating roster is the largest complaint in this category; we do not run one." },
@@ -37,6 +44,7 @@ export const residentialServices: ServicePage[] = [
     lead: "Baseboards, window tracks, inside oven and fridge. The difference from standard is a table, not a paragraph.",
     cta: "book",
     image: images.kitchen,
+    imageAlt: "Vancouver kitchen after a deep house cleaning, including inside oven and fridge.",
     points: [
       { title: "Inside oven and fridge are included.", body: "On a standard visit they are add-ons. On a deep clean they are in the price. That is the comparison buyers are told to make." },
       { title: "Time is honest.", body: "A 2-bed deep clean is modelled at about five hours with two people. If a quote is half that, the list is shorter." },
@@ -45,18 +53,67 @@ export const residentialServices: ServicePage[] = [
   },
   {
     slug: "move-in-move-out",
-    title: "Move Out Cleaning Vancouver | Deposit-Ready | HaldenCleaning",
-    h1: "Move-out cleaning that matches the inspection.",
-    meta: "End-of-tenancy and move-in cleaning in Vancouver. 96 checkpoints including inside cabinets, oven and fridge. Flat rate.",
+    title: "Move-In & Move-Out Cleaning Vancouver | HaldenCleaning",
+    h1: "Move-In & Move-Out Cleaning Services in Vancouver",
+    listingTitle: "Move-in / move-out",
+    meta: "Moving in or out? Book professional move-in and move-out cleaning in Vancouver with HaldenCleaning. Get a personalized quote online.",
     eyebrow: "Home cleaning · Move-in / move-out",
-    lead: "Inside cabinets, oven, fridge, tracks and baseboards. Built for the landlord inspection, not a “sparkle” pass.",
+    lead: "A vacant-home clean for a key handover or a landlord inspection. Inside cabinets, oven, fridge, tracks and baseboards are in the price — 96 checkpoints, published before you book.",
     cta: "book",
     image: images.hall,
+    imageAlt: "Empty Vancouver hallway after a move-in and move-out house cleaning.",
+    bookQuery: "service=move-out",
     points: [
-      { title: "96 checkpoints.", body: "Move-out is the full set. Inside cabinets are included here and remain an add-on on deep clean." },
+      { title: "96 checkpoints.", body: "Move-out is the full set. Inside cabinets are included here and remain an add-on on a deep clean." },
       { title: "Empty home.", body: "This service assumes the home is vacant or nearly vacant. A furnished home is a deep clean, not a move-out." },
       { title: "Deposit conversations need a document.", body: "The confirmation email carries the room-by-room scope. That is what both sides work from." },
     ],
+    sections: [
+      {
+        heading: "What is included",
+        paragraphs: [
+          "A move-in or move-out visit is 96 checkpoints across kitchen, bathrooms, bedrooms, living areas, halls and laundry. Inside oven, inside fridge and inside cabinets are included. Window tracks, baseboards and reachable wall marks are on the list — not described as a “sparkle” pass.",
+          "On a standard house cleaning, oven, fridge and cabinets are add-ons. On a deep clean, oven and fridge are included but cabinets stay an add-on. If you need the cabinets done for an inspection or a move-in, this is the service.",
+        ],
+      },
+      {
+        heading: "Move-in cleaning",
+        paragraphs: [
+          "Book this before you unpack. The home should be empty so we can reach cabinets, tracks and floors. The same 96-check list applies: you walk into a home that matches the published scope, not a first-visit teaser.",
+          "A brand-new suite with light sticker residue and dust is usually this service. Heavy drywall dust after a renovation is a different job — that is post-renovation cleaning, not a move-in with extra adjectives.",
+        ],
+      },
+      {
+        heading: "Move-out cleaning",
+        paragraphs: [
+          "Built for the landlord or strata inspection. We work from the same room-by-room list you receive in the confirmation email, so both sides have a document if the deposit is discussed.",
+          "The home should be vacant or nearly vacant. If furniture is still in place, book a deep clean instead — cabinets and under-furniture edges cannot be done as a move-out when the rooms are full.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "What is the difference between move-out and deep cleaning?",
+        a: "Move-out is 96 checks and includes inside cabinets. Deep cleaning is 82 checks: oven and fridge are included, cabinets are still an add-on. Move-out assumes an empty home; a furnished home is a deep clean.",
+      },
+      {
+        q: "Do I need to be out of the home?",
+        a: "Yes for this service. Access instructions and keys or lockbox codes go on the booking form. You do not need to be there.",
+      },
+      {
+        q: "Is the price hourly or flat?",
+        a: "Flat. The number you are quoted for the home size is the number you pay. If the visit takes longer, that is our problem, not your invoice. Payment is at the visit.",
+      },
+      {
+        q: "Can I see the price before I book?",
+        a: "Yes. Use the published rate table on this page or the calculator on Pricing, then book online with date, email and phone. No account is required.",
+      },
+      {
+        q: "Which areas do you cover?",
+        a: "Vancouver and the Fraser Valley: Vancouver, Burnaby, Richmond, North Vancouver, Surrey and Coquitlam. Five-bed and unusual homes are quoted after a walkthrough.",
+      },
+    ],
+    showMoveOutRates: true,
   },
   {
     slug: "post-renovation",
